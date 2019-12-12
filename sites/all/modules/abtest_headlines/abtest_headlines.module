@@ -83,7 +83,7 @@
 
    }
 
-    watchdog('abtest_headlines', 'Not displayng errors or outputs @filename.', array('@filename' => $filename), WATCHDOG_ERROR);
+   // watchdog('abtest_headlines', 'Not displayng errors or outputs .', $variables = array(), WATCHDOG_ERROR);
   
 
  /**
