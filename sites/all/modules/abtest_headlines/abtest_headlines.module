@@ -74,18 +74,15 @@
     ->fieldCondition('field_ab_test_boolean', 'value', 1, '=')
     ->fieldCondition('field_headline_a', 'value', NULL, '!=')
     ->fieldCondition('field_headline_b', 'value', NULL, '!=')
-    ->addTag('debug')
     ->execute();
-    dvr($result);
+    
 
     $nodes = entity_load('node', array_keys($entities['node'])); 
-
-    return $nodes;
+    return node_view_multiple($nodes, 'teaser');
 
    }
 
    
-
   
 
  /**
