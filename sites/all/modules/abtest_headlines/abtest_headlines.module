@@ -76,8 +76,11 @@
     ->fieldCondition('field_headline_b', 'value', NULL, '!=')
     ->addTag('debug')
     ->execute();
+    dvr($result);
 
-        
+    $nodes = entity_load('node', array_keys($entities['node'])); 
+
+    return $nodes;
 
    }
 
@@ -116,10 +119,10 @@
   *  Implements page results callback
   */
 
-  function abtest_headlines_results_page() {
+//   function abtest_headlines_results_page() {
 
-    return '<p>' . t('Hurry! You converted.') . '</p>';
+//     return '<p>' . t('Hurry! You converted.') . '</p>';
     
-}
+// }
 
   
