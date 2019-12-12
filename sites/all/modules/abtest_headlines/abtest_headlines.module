@@ -76,14 +76,13 @@
     ->fieldCondition('field_headline_b', 'value', NULL, '!=')
     ->execute();
     
-
     $nodes = entity_load('node', array_keys($entities['node'])); 
-    return node_view_multiple($nodes, 'teaser');
+  
+    
 
 
    }
-
-   // watchdog('abtest_headlines', 'Not displayng errors or outputs .', $variables = array(), WATCHDOG_ERROR);
+   
   
 
  /**
