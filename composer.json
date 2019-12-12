@@ -1,0 +1,12 @@
+{
+    "name": "vitalijus.charinas/abtest",
+    "description": "Drupal 7 dev website",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Vitalijus Charinas",
+            "email": "Vitalijus.Charinas@avalon.net"
+        }
+    ],
+    "require": {}
+}
