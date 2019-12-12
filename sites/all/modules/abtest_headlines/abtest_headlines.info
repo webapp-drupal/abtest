@@ -2,4 +2,3 @@ name = A/B test headlines
 description = A/B test in code for Default Article headlines.
 core = 7.x
 package = A/B test
-dependencies[] = abtest

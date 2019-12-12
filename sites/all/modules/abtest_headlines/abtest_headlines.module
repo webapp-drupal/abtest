@@ -80,9 +80,10 @@
     $nodes = entity_load('node', array_keys($entities['node'])); 
     return node_view_multiple($nodes, 'teaser');
 
+
    }
 
-   
+    watchdog('abtest_headlines', 'Not displayng errors or outputs @filename.', array('@filename' => $filename), WATCHDOG_ERROR);
   
 
  /**
