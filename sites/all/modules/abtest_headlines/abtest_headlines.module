@@ -78,7 +78,7 @@
    */
 
    function abtest_headlines_results_page () {
-     $nodes = [];
+    
     // Akshit Do i do it in right way?    
     $query = new EntityFieldQuery;
     $result = $query
