@@ -47,7 +47,7 @@
   */
 
   function abtest_headlines_menu() {
-
+// Akshit Do i do it in right way? 
     $items = array();
     $items['abtest_headlines'] = array(
         'title' => 'A/B test Results 2',
@@ -75,8 +75,7 @@
    */
 
    function abtest_headlines_node () {
-
-    
+// Akshit Do i do it in right way?    
     $query = new EntityFieldQuery;
     $result = $query
     ->entityCondition('entity_type', 'node')
@@ -90,7 +89,7 @@
     
     $nodes = entity_load('node', array_keys($result['node']));
 
-    return node_view_multiple($nodes, 'teaser');
+    return node_view_multiple($nodes, 'teaser'); // how do i display or use nodes to edit and change the title for the nodes in query
    
   }
    
