@@ -30,7 +30,7 @@
  *    it is filtred by query but to test fields are not empty will be extra care and helpfull ! Headline A and Headline B not empty !
  * 
  *    1 geting nodes in a loop we are fetching title and url of the filtered Node
- *    2 setting the test id for each node required testing
+ *    2 set the test id for each node required testing
  *    3 run test
  *    4 collect results and modify url to provide GA access to results
  *    5 display results for node in node tab no additional permissions required
@@ -69,7 +69,11 @@
    */
 
    function abtest_headlines_results_page () {
-    
+    $node_id = '';
+    $node_title ='';
+    $headingA = '';
+    $headingB = '';
+    $Url = '';
     //Query the nodes    
     $query = new EntityFieldQuery;
     $result = $query
@@ -81,9 +85,29 @@
     ->fieldCondition('field_headline_b', 'value', '', '!=')
     ->execute();
     $nids = array_keys($result['node']);
-    $nodes = node_load_multiple ($nids);
+
+    foreach ($nids as $nid){
+
+      print_r ($nid);
+      
+
+      //$nid = node_load($nid);
+      //dpr($nid);
+      
+      //$node_title = $nid->title;
+      //dpr($node_title);
+      
+
+    }
+
+    //$nodes = node_load_multiple ($nids);
     
-    dpr($nodes); // not displaing debug information
+    //dpr($nids); // not displaing debug information
+    // $node_title ='';
+    // $headingA = '';
+    // $headingB = '';
+    // $Url = '';
+    
     return $nodes;
 
     // THIS IS NODE DISPLAY
