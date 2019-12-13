@@ -49,11 +49,12 @@
   function abtest_headlines_menu() {
 // Akshit Do i do it in right way? 
     $items = array();
-    $items['abtest_headlines'] = array(
+    $items['abtest-headlines'] = array(
         'title' => 'A/B test Results 2',
         'description' => 'Demonstrates A/B Test Results.',
         'access callback' => TRUE,
         'page callback' => 'abtest_headlines_results_page',
+        'type' => MENU_NORMAL_ITEM,
         
       );
 
@@ -61,17 +62,7 @@
 
   }
 
-  /*
-   *  Implements hook_query_alter()
-   * 
-   */
-  function abtest_headlines_query_alter () {
-    if ($query->hasTag('efq_debug') && module_exists('devel')) {
-      dpm((string)$query);
-       dpm($query->arguments());
-    }
-
-    }
+ 
 
   /**
    *  Getting nodes with required conditions
@@ -86,12 +77,11 @@
     ->entityCondition('bundle', 'blogs')
     ->propertyCondition('status', 1)
     ->fieldCondition('field_ab_test_boolean', 'value', 1, '=')
-    ->fieldCondition('field_headline_a', 'value', NULL, '!=')
-    ->fieldCondition('field_headline_b', 'value', NULL, '!=')
-    //->addTag('efq_debug')
+    ->fieldCondition('field_headline_a', 'value', '', '!=')
+    ->fieldCondition('field_headline_b', 'value', '', '!=')
     ->execute();
     
-    $output = [];
+    $output = array();//lets display them
     if (!empty($result['node'])) {
       $output['nodes'] = node_view_multiple(node_load_multiple(array_keys($result['node'])), 'teaser');
       $output['pager']['#markup'] = theme('pager', $query->pager);
