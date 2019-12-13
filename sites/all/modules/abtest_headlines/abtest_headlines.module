@@ -60,22 +60,23 @@
   }
 
   /*
-   *  Implementinh hook_query_alter
+   *  Implements hook_query_alter()
    * 
    */
-  function abtest_headlines_query_alter () {
-    if ($query->hasTag('efq_debug') && module_exists('devel')) {
-      dpm((string)$query);
-    }
+  // function abtest_headlines_query_alter () {
+  //   if ($query->hasTag('efq_debug') && module_exists('devel')) {
+  //     dpm((string)$query);
+  //   }
 
-   }
+  //  }
 
   /**
    *  Getting nodes with required conditions
    */
 
    function abtest_headlines_node () {
-// Akshit Do i do it in right way?    
+     $nodes = [];
+    // Akshit Do i do it in right way?    
     $query = new EntityFieldQuery;
     $result = $query
     ->entityCondition('entity_type', 'node')
@@ -84,15 +85,18 @@
     ->fieldCondition('field_ab_test_boolean', 'value', 1, '=')
     ->fieldCondition('field_headline_a', 'value', NULL, '!=')
     ->fieldCondition('field_headline_b', 'value', NULL, '!=')
-    ->addTag('efq_debug')
+    //->addTag('efq_debug')
     ->execute();
+    
     
     $nodes = entity_load('node', array_keys($result['node']));
 
     return node_view_multiple($nodes, 'teaser'); // how do i display or use nodes to edit and change the title for the nodes in query
+
+   
    
   }
-   
+  
  /**
   * Generates A/B test for the Node 
   */
