@@ -47,7 +47,7 @@
   */
 
   function abtest_headlines_menu() {
-// Akshit Do i do it in right way? 
+      // Akshit Do i do it in right way? 
     $items = array();
     $items['abtest-headlines'] = array(
         'title' => 'A/B test Results 2',
@@ -70,7 +70,7 @@
 
    function abtest_headlines_results_page () {
     
-    // Akshit Do i do it in right way?    
+    //Query the nodes    
     $query = new EntityFieldQuery;
     $result = $query
     ->entityCondition('entity_type', 'node')
@@ -80,8 +80,14 @@
     ->fieldCondition('field_headline_a', 'value', '', '!=')
     ->fieldCondition('field_headline_b', 'value', '', '!=')
     ->execute();
-    
-    $output = array();//lets display them
+    // $nids = array_keys($result['node']);
+    // $nodes = node_load_multiple ($nids);
+    // return $nodes;
+    // dpr($nodes); // not displaing debug information
+
+    // THIS IS NODE DISPLAY
+
+     $output = array();//lets display them
     if (!empty($result['node'])) {
       $output['nodes'] = node_view_multiple(node_load_multiple(array_keys($result['node'])), 'teaser');
       $output['pager']['#markup'] = theme('pager', $query->pager);
@@ -90,9 +96,13 @@
     else {
             $output['status']['#markup'] = t('No results were returned.');
         }
-  return $output;
+    return $output;
+
+    dpm ($output); //not displaing debug information
+
+
   }
-    
+  
     
   //   $nodes = entity_load('node', array_keys($result['node']));
 
