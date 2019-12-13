@@ -80,25 +80,27 @@
     ->fieldCondition('field_headline_a', 'value', '', '!=')
     ->fieldCondition('field_headline_b', 'value', '', '!=')
     ->execute();
-    // $nids = array_keys($result['node']);
-    // $nodes = node_load_multiple ($nids);
-    // return $nodes;
-    // dpr($nodes); // not displaing debug information
+    $nids = array_keys($result['node']);
+    $nodes = node_load_multiple ($nids);
+    
+    dpr($nodes); // not displaing debug information
+    return $nodes;
 
     // THIS IS NODE DISPLAY
 
-     $output = array();//lets display them
-    if (!empty($result['node'])) {
-      $output['nodes'] = node_view_multiple(node_load_multiple(array_keys($result['node'])), 'teaser');
-      $output['pager']['#markup'] = theme('pager', $query->pager);
-    }
+    //  $output = array();//lets display them
+    //   if (!empty($result['node'])) {
+    //   $output['nodes'] = node_view_multiple(node_load_multiple(array_keys($result['node'])), 'teaser');
+    //   $output['pager']['#markup'] = theme('pager', $query->pager);
+    // }
   
-    else {
-            $output['status']['#markup'] = t('No results were returned.');
-        }
-    return $output;
+    // else {
+    //         $output['status']['#markup'] = t('No results were returned.');
+    //     }
+    
 
-    dpm ($output); //not displaing debug information
+    // dpm ($output); //not displaing debug information
+    // return $output;
 
 
   }
