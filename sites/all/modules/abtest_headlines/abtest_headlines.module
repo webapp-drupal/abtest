@@ -59,13 +59,24 @@
 
   }
 
+  /*
+   *  Implementinh hook_query_alter
+   * 
+   */
+  function abtest_headlines_query_alter () {
+    if ($query->hasTag('efq_debug') && module_exists('devel')) {
+      dpm((string)$query);
+    }
+
+   }
+
   /**
    *  Getting nodes with required conditions
    */
 
    function abtest_headlines_node () {
 
-    //WE do call all nodes in required conditions by 
+    
     $query = new EntityFieldQuery;
     $result = $query
     ->entityCondition('entity_type', 'node')
@@ -74,17 +85,15 @@
     ->fieldCondition('field_ab_test_boolean', 'value', 1, '=')
     ->fieldCondition('field_headline_a', 'value', NULL, '!=')
     ->fieldCondition('field_headline_b', 'value', NULL, '!=')
+    ->addTag('efq_debug')
     ->execute();
     
-    $nodes = entity_load('node', array_keys($entities['node'])); 
-  
-    
+    $nodes = entity_load('node', array_keys($result['node']));
 
-
-   }
+    return node_view_multiple($nodes, 'teaser');
    
-  
-
+  }
+   
  /**
   * Generates A/B test for the Node 
   */
