@@ -74,6 +74,8 @@
     $headingA = '';
     $headingB = '';
     $Url = '';
+    $Url_a ='';
+    $Url_b = '';
     $ga_tracking_path_A = "?utm_source=Home%20Page&utm_medium=website&utm_campaign=AB%20Test&utm_content=HeadlineA";
     $ga_tracking_path_B = "?utm_source=Home%20Page&utm_medium=website&utm_campaign=AB%20Test&utm_content=HeadlineB";
     //Query the nodes    
@@ -90,26 +92,40 @@
 
     foreach ($nodes as $node){
 
-      
-      
-
       $node = node_load($node);
       
       //dpr($node);
       global $base_url;
-      $node_title = "TITLE: ".$node->title;
-      $node_id = "NODE ID: ".$node->nid;
-      $headingA = "VARIANT A: ".$node->field_headline_a[LANGUAGE_NONE] [0] ['value'];
-      $headingB = "VARIANT B: ".$node->field_headline_b[LANGUAGE_NONE] [0] ['value'];
-      $Url = "URL: ". $base_url."/".drupal_get_path_alias('node/'.$node->nid).$ga_tracking_path_A;
+      $node_title = "ORIGINAL TITLE: ".$node->title;
+      $node_id = $node->nid;
+      $headingA = "TEST TITLE VARIANT A: ".$node->field_headline_a[LANGUAGE_NONE] [0] ['value'];
+      $headingB = "TEST TITLE VARIANT B: ".$node->field_headline_b[LANGUAGE_NONE] [0] ['value'];
+      $Url = $base_url."/".drupal_get_path_alias('node/'.$node->nid);
+      //$Url_a = "URL: ". $base_url."/".drupal_get_path_alias('node/'.$node->nid).$ga_tracking_path_A;
+      //$Url_b = "URL: ". $base_url."/".drupal_get_path_alias('node/'.$node->nid).$ga_tracking_path_B;
      
+      dpr ($node_id);
+      dpr($node_title);
+      
+      //dpr($headingA);
+      //dpr($headingB);
+      
+      
+      if ((int)$node_id < 7) {
+        dpr ((int)$node_id);
+
+        $node_title = $headingA;
+        $Url_a = $Url.$ga_tracking_path_A;
+        dpr($Url_a);
+      }
+      else {
+        dpr ((int)$node_id);
+        $node_title = $headingB;
+        $Url_b = $Url.$ga_tracking_path_B;
+        dpr($Url_b);
+      }
 
       dpr($node_title);
-      dpr ($node_id);
-      dpr($headingA);
-      dpr($headingB);
-      dpr($Url);
-      
 
     }
 
