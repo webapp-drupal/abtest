@@ -100,12 +100,14 @@
       $node_id = $node->nid;
       $headingA = "TEST TITLE VARIANT A: ".$node->field_headline_a[LANGUAGE_NONE] [0] ['value'];
       $headingB = "TEST TITLE VARIANT B: ".$node->field_headline_b[LANGUAGE_NONE] [0] ['value'];
-      $Url = $base_url."/".drupal_get_path_alias('node/'.$node->nid);
+      $Url = url(drupal_get_path_alias('node/' . $node->nid), array('absolute' => TRUE));
       //$Url_a = "URL: ". $base_url."/".drupal_get_path_alias('node/'.$node->nid).$ga_tracking_path_A;
       //$Url_b = "URL: ". $base_url."/".drupal_get_path_alias('node/'.$node->nid).$ga_tracking_path_B;
      
       dpr ($node_id);
       dpr($node_title);
+      dpr($Url);
+      //dpr ($node);
       
       //dpr($headingA);
       //dpr($headingB);
@@ -115,16 +117,16 @@
         //dpr ((int)$node_id);
 
         $node_title = $headingA;
-        $Url_a = $Url.$ga_tracking_path_A;
+        $Url = $Url.$ga_tracking_path_A;
         dpr($node_title);
-        dpr($Url_a);
+        dpr($Url);
       }
       else {
-        dpr ((int)$node_id);
+        //dpr ((int)$node_id);
         $node_title = $headingB;
-        $Url_b = $Url.$ga_tracking_path_B;
+        $Url = $Url.$ga_tracking_path_B;
         dpr($node_title);
-        dpr($Url_b);
+        dpr($Url);
       }
 
       
