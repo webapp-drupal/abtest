@@ -112,20 +112,22 @@
       
       
       if ((int)$node_id < 7) {
-        dpr ((int)$node_id);
+        //dpr ((int)$node_id);
 
         $node_title = $headingA;
         $Url_a = $Url.$ga_tracking_path_A;
+        dpr($node_title);
         dpr($Url_a);
       }
       else {
         dpr ((int)$node_id);
         $node_title = $headingB;
         $Url_b = $Url.$ga_tracking_path_B;
+        dpr($node_title);
         dpr($Url_b);
       }
 
-      dpr($node_title);
+      
 
     }
 
