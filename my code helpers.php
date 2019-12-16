@@ -81,3 +81,31 @@
   //     drupal_goto($node->url);
   //   }
   // }
+
+  //$nodes = node_load_multiple ($nids);
+    
+    //dpr($nids); // not displaing debug information
+    // $node_title ='';
+    // $headingA = '';
+    // $headingB = '';
+    // $Url = '';
+    
+    //return $nodes;
+
+    //THIS IS NODE DISPLAY
+
+    //  $output = array();//lets display them
+    //   if (!empty($result['node'])) {
+    //   $output['nodes'] = node_view_multiple(node_load_multiple(array_keys($result['node'])), 'teaser');
+    //   $output['pager']['#markup'] = theme('pager', $query->pager);
+     
+    
+    // }
+  
+    // else {
+    //         $output['status']['#markup'] = t('No results were returned.');
+    //     }
+    
+
+    // dpr ($output); //not displaing debug information
+    // return $output;

@@ -84,48 +84,35 @@
     ->fieldCondition('field_headline_a', 'value', '', '!=')
     ->fieldCondition('field_headline_b', 'value', '', '!=')
     ->execute();
-    $nids = array_keys($result['node']);
+    $nodes = array_keys($result['node']);
 
-    foreach ($nids as $nid){
+    foreach ($nodes as $node){
 
-      print_r ($nid);
+      
       
 
-      //$nid = node_load($nid);
-      //dpr($nid);
+      $node = node_load($node);
       
-      //$node_title = $nid->title;
-      //dpr($node_title);
+      //dpr($node);
+      global $base_url;
+      $node_title = "TITLE: ".$node->title;
+      $node_id = "NODE ID: ".$node->nid;
+      $headingA = "VARIANT A: ".$node->field_headline_a[LANGUAGE_NONE] [0] ['value'];
+      $headingB = "VARIANT B: ".$node->field_headline_b[LANGUAGE_NONE] [0] ['value'];
+      $Url = "URL: ". $base_url."/".drupal_get_path_alias('node/'.$node->nid);
+      $ga_tracking_path_A = "?utm_source=Home%20Page&utm_medium=website&utm_campaign=AB%20Test&utm_content=HeadlineA";
+      $ga_tracking_path_B = "?utm_source=Home%20Page&utm_medium=website&utm_campaign=AB%20Test&utm_content=HeadlineB";
+
+      dpr($node_title);
+      dpr ($node_id);
+      dpr($headingA);
+      dpr($headingB);
+      dpr($Url);
       
 
     }
 
-    //$nodes = node_load_multiple ($nids);
     
-    //dpr($nids); // not displaing debug information
-    // $node_title ='';
-    // $headingA = '';
-    // $headingB = '';
-    // $Url = '';
-    
-    return $nodes;
-
-    // THIS IS NODE DISPLAY
-
-    //  $output = array();//lets display them
-    //   if (!empty($result['node'])) {
-    //   $output['nodes'] = node_view_multiple(node_load_multiple(array_keys($result['node'])), 'teaser');
-    //   $output['pager']['#markup'] = theme('pager', $query->pager);
-    // }
-  
-    // else {
-    //         $output['status']['#markup'] = t('No results were returned.');
-    //     }
-    
-
-    // dpm ($output); //not displaing debug information
-    // return $output;
-
 
   }
   
