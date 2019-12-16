@@ -74,6 +74,8 @@
     $headingA = '';
     $headingB = '';
     $Url = '';
+    $ga_tracking_path_A = "?utm_source=Home%20Page&utm_medium=website&utm_campaign=AB%20Test&utm_content=HeadlineA";
+    $ga_tracking_path_B = "?utm_source=Home%20Page&utm_medium=website&utm_campaign=AB%20Test&utm_content=HeadlineB";
     //Query the nodes    
     $query = new EntityFieldQuery;
     $result = $query
@@ -99,9 +101,8 @@
       $node_id = "NODE ID: ".$node->nid;
       $headingA = "VARIANT A: ".$node->field_headline_a[LANGUAGE_NONE] [0] ['value'];
       $headingB = "VARIANT B: ".$node->field_headline_b[LANGUAGE_NONE] [0] ['value'];
-      $Url = "URL: ". $base_url."/".drupal_get_path_alias('node/'.$node->nid);
-      $ga_tracking_path_A = "?utm_source=Home%20Page&utm_medium=website&utm_campaign=AB%20Test&utm_content=HeadlineA";
-      $ga_tracking_path_B = "?utm_source=Home%20Page&utm_medium=website&utm_campaign=AB%20Test&utm_content=HeadlineB";
+      $Url = "URL: ". $base_url."/".drupal_get_path_alias('node/'.$node->nid).$ga_tracking_path_A;
+     
 
       dpr($node_title);
       dpr ($node_id);
