@@ -109,3 +109,109 @@
 
     // dpr ($output); //not displaing debug information
     // return $output;
+
+     //   $nodes = entity_load('node', array_keys($result['node']));
+
+  //   return node_view_multiple($nodes, 'teaser'); // how do i display or use nodes to edit and change the title for the nodes in query
+
+   
+   
+  // }
+  
+ /**
+  * Generates A/B test for the Node 
+  */
+
+ 
+//  function abtest_headlines_node() {
+
+//     $output = '';
+//     $output .= 'Test fired';
+//     // test variations in core WOW  SOLUTION 
+//     if (abtest('abtest_headlines')){
+
+//         //Variation Headline A
+
+//     }
+//     else{
+
+//         //Variation Headline B
+
+
+//     }
+
+//     return $output;
+
+//  }
+
+
+
+/**
+   *  Getting nodes with required conditions
+   */
+
+  //  function abtest_headlines_test () {
+  //   $node_id = '';
+  //   $node_title ='';
+  //   $headingA = '';
+  //   $headingB = '';
+  //   $Url = '';
+  //   $ga_tracking_path_A = "?utm_source=Home%20Page&utm_medium=website&utm_campaign=AB%20Test&utm_content=HeadlineA";
+  //   $ga_tracking_path_B = "?utm_source=Home%20Page&utm_medium=website&utm_campaign=AB%20Test&utm_content=HeadlineB";
+  //   //Query the nodes    
+  //   $query = new EntityFieldQuery;
+  //   $result = $query
+  //   ->entityCondition('entity_type', 'node')
+  //   ->entityCondition('bundle', 'blogs')
+  //   ->propertyCondition('status', 1)
+  //   ->fieldCondition('field_ab_test_boolean', 'value', 1, '=')
+  //   ->fieldCondition('field_headline_a', 'value', '', '!=')
+  //   ->fieldCondition('field_headline_b', 'value', '', '!=')
+  //   ->execute();
+  //   $nodes = array_keys($result['node']);
+
+  //   foreach ($nodes as $node){
+
+  //     $node = node_load($node);
+      
+  //     //dpr($node);
+  //     global $base_url;
+  //     $node_title = "ORIGINAL TITLE: ".$node->title;
+  //     $node_id = $node->nid;
+  //     $headingA = "TEST TITLE VARIANT A: ".$node->field_headline_a[LANGUAGE_NONE] [0] ['value']; // string to be removed
+  //     $headingB = "TEST TITLE VARIANT B: ".$node->field_headline_b[LANGUAGE_NONE] [0] ['value']; // string to be removed
+  //     $Url = url(drupal_get_path_alias('node/' . $node->nid), array('absolute' => TRUE));
+      
+     
+  //     dpr ($node_id);
+  //     dpr($node_title);
+  //     dpr($Url);
+  //     //dpr ($node);
+      
+  //     //dpr($headingA);
+  //     //dpr($headingB);
+      
+  //     //it is not real test
+  //     if ((int)$node_id < 7) {
+  //       //dpr ((int)$node_id);
+
+  //       $node_title = $headingA;
+  //       $Url = $Url.$ga_tracking_path_A;
+  //       dpr($node_title);
+  //       dpr($Url);
+  //     }
+  //     else {
+  //       //dpr ((int)$node_id);
+  //       $node_title = $headingB;
+  //       $Url = $Url.$ga_tracking_path_B;
+  //       dpr($node_title);
+  //       dpr($Url);
+  //     }
+
+      
+
+  //   }
+
+    
+
+  // }
