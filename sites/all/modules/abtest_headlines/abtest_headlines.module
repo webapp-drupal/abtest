@@ -65,7 +65,8 @@
         'title' => 'A/B Tests Report',
         'description' => 'Admin pannel for multiple tests results',
         'access callback' => TRUE,
-        'page callback' => 'abtest_headlines_admin_dashboard',
+        'page callback' => 'abtest_headlines_results_node_tab',
+        //'page callback' => 'abtest_headlines_admin_dashboard',
         'type' => MENU_NORMAL_ITEM,
          
 
@@ -106,7 +107,7 @@
         $ga_tracking_path_A = "?utm_source=Home%20Page&utm_medium=website&utm_campaign=AB%20Test&utm_content=HeadlineA";
         $ga_tracking_path_B = "?utm_source=Home%20Page&utm_medium=website&utm_campaign=AB%20Test&utm_content=HeadlineB";
         $output = '';
-        $output .= '<h2>'.t('Results').'</h2>';
+        $output .= '<h2>'.t('A/B Test Results').'</h2>';
         
         $nodes = array_keys( abtest_headlines_query_nodes()['node']); //reusing query in function
     
@@ -142,8 +143,8 @@
            // dpr($node_title);
             //dpr($Url);
            
-            $output .= '<h3>'.t('TITLE VARIANT A: ').$node_title.'</h3>';
-            $output .= '<a href="'.$Url.'" target=_blank>'.$Url.'</a>';
+            $output .= '<h3>'.t('TITLE VARIANT A: ').$node_title.'</h3>'.'<p>'.' 987 '.t('Clicks').'</p>';
+            $output .= '<br>'.'<a href="'.$Url.'" target=_blank>'.$Url.'</a>';
           }
           else {
             //dpr ((int)$node_id);
@@ -152,8 +153,8 @@
             // dpr($node_title);
             // dpr($Url);
 
-            $output .= '<h3>'.t('TITLE VARIANT B: ').$node_title.'</h3>';
-            $output .= '<a href="'.$Url.'" target=_blank>'.$Url.'</a>';
+            $output .= '<h3>'.t('TITLE VARIANT A: ').$node_title.'</h3>'.'<p>'.' 456 '.t('Clicks').'</p>';
+            $output .= '<br>'.'<a href="'.$Url.'" target=_blank>'.$Url.'</a>';
           }
     
           
