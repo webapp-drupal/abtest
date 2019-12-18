@@ -79,9 +79,9 @@
   function _abtest_headlines_menu_access () {
 
     $node = menu_get_object();
-     dpr($node);
-     $checkbox = $node->field_ab_test_boolean[0]['value'];
-     dpr($checkbox);
+     
+    return $node->field_ab_test_boolean[0]['value'] === 1;
+    
 
    
     //  if ($node->field_ab_test_boolean[0]['value'] === 1) {
