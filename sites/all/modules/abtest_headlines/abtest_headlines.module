@@ -31,8 +31,8 @@
  * 
  *    1 geting nodes in a loop we are fetching title and url of the filtered Node
  *    2 set the test id for each node required testing
- *    3 run test
- *    4 collect results and modify url to provide GA access to results
+ *    3 run test and modify url to provide GA access to results
+ *    4 collect results 
  *    5 display results for node in node tab no additional permissions required
  *    6 display page with all tests results performed on admin accessable page (requires permission view results page)
  * 
@@ -41,64 +41,52 @@
   * /
   * getting the required fields to be used in the test
  */
- 
 /**
-  *     Implements hook_menu() for the results
-  */
+ * Implements hook_menu().
+ */
 
-  function abtest_headlines_menu() {
-      // Menus
-    $items = array();
-    $items['node/%node/abtest-headlines'] = array(
-        'title' => 'A/B Test Results',
-        'description' => 'Demonstrates A/B Test Results.',
-        'access callback' => TRUE,//'_abtest_headlines_menu_access',
-        'page callback' => 'abtest_headlines_results_node_tab',
-        //'page callback' => '_abtest_headlines_menu_access',
-        'type' =>  MENU_LOCAL_TASK,
-        'weight' => 10,
-        
-      );
+function abtest_headlines_menu() {
+  $items = array();
+  $items['abtest-headlines'] = array(
+    'title' => 'A/B test example',
+    'description' => 'Demonstrates using the abtest module.',
+    'access callback' => TRUE,
+    'page callback' => 'abtest_headlines_results_node_tab',
+    'type' => MENU_NORMAL_ITEM,
+  );
 
-    $items ['admin/reports/abtests-dashboard'] = array(
+    return $items;
+}
 
-        'title' => 'A/B Tests Report',
-        'description' => 'Admin pannel for multiple tests results',
-        'access callback' => TRUE,
-        'page callback' => 'abtest_headlines_results_node_tab',
-        //'page callback' => 'abtest_headlines_admin_dashboard',
-        'type' => MENU_NORMAL_ITEM,
-         
+/*
+*  Implements EntityFieldQuery results
+*/
 
-    );
+function abtest_headlines_query_nodes() {
 
-      return $items;
-
-  }
-
-
-  function _abtest_headlines_menu_access () {
-
-    $node = menu_get_object();
-     
-    return $node->field_ab_test_boolean[0]['value'] === 1;
-    
-
-   
-    //  if ($node->field_ab_test_boolean[0]['value'] === 1) {
-    //   // Get the field value
-    //  return TRUE;
-            
-    //}
-   
-  }
-
+  //Query the nodes    
+          $query = new EntityFieldQuery;
+          $result = $query
+          ->entityCondition('entity_type', 'node')
+          ->entityCondition('bundle', 'blogs')
+          ->propertyCondition('status', 1)
+          ->fieldCondition('field_ab_test_boolean', 'value', 1, '=')
+          ->fieldCondition('field_headline_a', 'value', '', '!=')
+          ->fieldCondition('field_headline_b', 'value', '', '!=')
+          ->execute();
   
+  
+          return $result;
+  
+  }
 
+/*
+*   Implements test page
+*/
   function abtest_headlines_results_node_tab() {
-        //abtest_track_conversion('abtest_example');
+        //abtest_track_conversion('abtest_example'); //that will be counting results
 
-        // need to get node id and display results off the paticular node
+       
         $node_id = '';
         $node_title ='';
         $headingA = '';
@@ -106,8 +94,10 @@
         $Url = '';
         $ga_tracking_path_A = "?utm_source=Home%20Page&utm_medium=website&utm_campaign=AB%20Test&utm_content=HeadlineA";
         $ga_tracking_path_B = "?utm_source=Home%20Page&utm_medium=website&utm_campaign=AB%20Test&utm_content=HeadlineB";
-        $output = '';
-        $output .= '<h2>'.t('A/B Test Results').'</h2>';
+        $output = '';//lets display them
+        
+       
+        $output .= '<h2>'.t('A/B Test Example').'</h2>';
         
         $nodes = array_keys( abtest_headlines_query_nodes()['node']); //reusing query in function
     
@@ -115,52 +105,82 @@
     
           $node = node_load($node);
           
+          
           //dpr($node);
           global $base_url;
-          $node_title = $node->title;
+          //$node_title = $node->title;
           $node_id = $node->nid;
+          $node_test_id ='abtest_headlines'.'_'.$node_id;
           $headingA = $node->field_headline_a[LANGUAGE_NONE] [0] ['value']; // string to be removed
           $headingB = $node->field_headline_b[LANGUAGE_NONE] [0] ['value']; // string to be removed
-          $Url = url(drupal_get_path_alias('node/' . $node->nid), array('absolute' => TRUE));
-          
-          
-          // dpr ($node_id);
-          // dpr($node_title);
-          //$output .= '<h3>'.t('ORIGINAL TITLE: ').$node_title.'</h3>';
-          // dpr($Url);
-        
-          //dpr ($node);
-          
-          //dpr($headingA);
-          //dpr($headingB);
+          //$Url = url(drupal_get_path_alias('node/' . $node->nid), array('absolute' => TRUE));
+          //$Url = drupal_get_path_alias(('node/' . $node->nid), array('absolute' => TRUE), );
+          //$node_test_id ='abtest_headlines'.'_'.$node_id;
+
+          $output .= '<p>'.$node_id.'</p>';
+
+          $output .= '<h4>'.$node_test_id. '</h4>';
           
           //it is not real test
-          if ((int)$node_id < 7) {
-            //dpr ((int)$node_id);
+          if ((int)$node_id > 22) {
+            
     
-            $node_title = $headingA;
-            $Url = $Url.$ga_tracking_path_A;
-           // dpr($node_title);
-            //dpr($Url);
+            $node->title = $headingA;
+            $path = url(drupal_get_path_alias('node/' . $node->nid), array(
+                'query' => array (
+                'utm_source'=>'Home Page',
+                'utm_medium'=>'website',
+                'utm_campaign'=>'AB Test',
+                'utm_content'=>'HeadlineA'),
+                'absolute' => TRUE,
+              )
+            );
+            $node->path = array('alias' => $path);
+              
+            node_save($node);
+           //dpr ($path); $node->path = array('alias' => $path);
+          // $Url = $Url.$ga_tracking_path_A;
            
-            $output .= '<h3>'.t('TITLE VARIANT A: ').$node_title.'</h3>'.'<p>'.' 987 '.t('Clicks').'</p>';
-            $output .= '<br>'.'<a href="'.$Url.'" target=_blank>'.$Url.'</a>';
+           
+          
+            $output .= '<h3>'.t('TITLE VARIANT A: ').$node->title.'</h3>'.'<p>'.$node->path['alias'].'</p>';
+           
+           // $output .= '<br>'.'<a href="'.$Url.'" target=_blank>'.$Url.'</a>';
           }
           else {
             //dpr ((int)$node_id);
-            $node_title = $headingB;
-            $Url = $Url.$ga_tracking_path_B;
+            $node->title = $headingB;
+            $path = url(drupal_get_path_alias('node/' . $node->nid), array(
+              'query' => array (
+              'utm_source'=>'Home Page',
+              'utm_medium'=>'website',
+              'utm_campaign'=>'AB Test',
+              'utm_content'=>'HeadlineB'),
+              'absolute' => TRUE,
+            )
+          );
+            $node->path = array('alias' => $path);
+            node_save($node);
+            
+           // $Url = $Url.$ga_tracking_path_B;
+           
+           
             // dpr($node_title);
             // dpr($Url);
+            
+            $output .= '<h3>'.t('TITLE VARIANT B: ').$node->title.'</h3>'.'<p>'.$node->path['alias'].'</p>';
 
-            $output .= '<h3>'.t('TITLE VARIANT A: ').$node_title.'</h3>'.'<p>'.' 456 '.t('Clicks').'</p>';
-            $output .= '<br>'.'<a href="'.$Url.'" target=_blank>'.$Url.'</a>';
+            //print_r ($node->title);
+            
+            //$output .= '<br>'.'<a href="'.$Url.'" target=_blank>'.$Url.'</a>';
           }
+          //$output = node_view ($node, $view_mode = 'teaser');
     
           
 
   }
   return $output;
+  //return node_view_multiple($nodes, 'teaser');
 }
 
 
@@ -169,36 +189,39 @@
   *  Generates conversion page for the admin 
   */
   
-  function abtest_headlines_admin_dashboard () {
-    //abtest_track_conversion('abtest_example');
+  // function abtest_headlines_admin_dashboard () {
+  //   //abtest_track_conversion('abtest_example');
 
 
-    return  '<h2>' . t('Admin dashboard should be here.') . '</h2>';
+  //   return  '<h2>' . t('Admin dashboard should be here.') . '</h2>';
 
-  }
+  // }
     
    
    
   // }
   
  /**
-  * Generates A/B test for the Node 
+  * Generates A/B test for the Nodes 
   */
 
  
-//  function abtest_headlines_node() {
+//  function abtest_headlines_nodes() {
 
-//     $output = '';
-//     $output .= 'Test fired';
+
 //     // test variations in core WOW  SOLUTION 
-//     if (abtest('abtest_headlines')){
+//     if (abtest('$node_test_id')){
 
 //         //Variation Headline A
+//          $node_title = $headingA;
+//          $Url = $Url.$ga_tracking_path_A;
 
 //     }
 //     else{
 
 //         //Variation Headline B
+//        $node_title = $headingB;
+//        $Url = $Url.$ga_tracking_path_B;
 
 
 //     }
@@ -207,24 +230,3 @@
 
 //  }
 
-/*
-*  Implements EntityFieldQuery results
-*/
-
-function abtest_headlines_query_nodes() {
-
-//Query the nodes    
-        $query = new EntityFieldQuery;
-        $result = $query
-        ->entityCondition('entity_type', 'node')
-        ->entityCondition('bundle', 'blogs')
-        ->propertyCondition('status', 1)
-        ->fieldCondition('field_ab_test_boolean', 'value', 1, '=')
-        ->fieldCondition('field_headline_a', 'value', '', '!=')
-        ->fieldCondition('field_headline_b', 'value', '', '!=')
-        ->execute();
-
-
-        return $result;
-
-}

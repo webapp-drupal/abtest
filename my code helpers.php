@@ -42,16 +42,16 @@
 
 // THIS IS NODE DISPLAY
 
-   //   $output = array();//lets display them
-  //   if (!empty($result['node'])) {
-  //     $output['nodes'] = node_view_multiple(node_load_multiple(array_keys($result['node'])), 'teaser');
-  //     $output['pager']['#markup'] = theme('pager', $query->pager);
-  //   }
+     $output = array();//lets display them
+    if (!empty($result['node'])) {
+      $output['nodes'] = node_view_multiple(node_load_multiple(array_keys($result['node'])), 'teaser');
+      $output['pager']['#markup'] = theme('pager', $query->pager);
+    }
   
-  //   else {
-  //           $output['status']['#markup'] = t('No results were returned.');
-  //       }
-  // return $output;
+    else {
+            $output['status']['#markup'] = t('No results were returned.');
+        }
+  return $output;
 
 
 
@@ -214,4 +214,55 @@
 
     
 
+  // }
+
+  /**
+  *     Implements hook_menu() for the results
+  */
+
+  // function abtest_headlines_menu() {
+  //     // Menus
+  //   $items = array();
+  //   $items['node/%node/abtest-headlines'] = array(
+  //       'title' => 'A/B Test Results',
+  //       'description' => 'Demonstrates A/B Test Results.',
+  //       'access callback' => TRUE,//'_abtest_headlines_menu_access',
+  //       'page callback' => 'abtest_headlines_results_node_tab',
+  //       //'page callback' => '_abtest_headlines_menu_access',
+  //       'type' =>  MENU_LOCAL_TASK,
+  //       'weight' => 10,
+        
+  //     );
+
+  //   $items ['admin/reports/abtests-dashboard'] = array(
+
+  //       'title' => 'A/B Tests Report',
+  //       'description' => 'Admin pannel for multiple tests results',
+  //       'access callback' => TRUE,
+  //       'page callback' => 'abtest_headlines_results_node_tab',
+  //       //'page callback' => 'abtest_headlines_admin_dashboard',
+  //       'type' => MENU_NORMAL_ITEM,
+         
+
+  //   );
+
+  //     return $items;
+
+  // }
+  
+
+  // function _abtest_headlines_menu_access () {
+
+  //   $node = menu_get_object();
+     
+  //   return $node->field_ab_test_boolean[0]['value'] === 1;
+    
+
+   
+  //   //  if ($node->field_ab_test_boolean[0]['value'] === 1) {
+  //   //   // Get the field value
+  //   //  return TRUE;
+            
+  //   //}
+   
   // }
