@@ -91,97 +91,71 @@ function abtest_headlines_query_nodes() {
         $node_title ='';
         $headingA = '';
         $headingB = '';
-        $Url = '';
-        $ga_tracking_path_A = "?utm_source=Home%20Page&utm_medium=website&utm_campaign=AB%20Test&utm_content=HeadlineA";
-        $ga_tracking_path_B = "?utm_source=Home%20Page&utm_medium=website&utm_campaign=AB%20Test&utm_content=HeadlineB";
         $output = '';//lets display them
-        
-       
-        $output .= '<h2>'.t('A/B Test Example').'</h2>';
-        
+        //getting required nodes to test
         $nodes = array_keys( abtest_headlines_query_nodes()['node']); //reusing query in function
     
-        foreach ($nodes as $node){
+            foreach ($nodes as $node){
     
-          $node = node_load($node);
-          
-          
-          //dpr($node);
-          global $base_url;
-          //$node_title = $node->title;
-          $node_id = $node->nid;
-          $node_test_id ='abtest_headlines'.'_'.$node_id;
-          $headingA = $node->field_headline_a[LANGUAGE_NONE] [0] ['value']; // string to be removed
-          $headingB = $node->field_headline_b[LANGUAGE_NONE] [0] ['value']; // string to be removed
-          //$Url = url(drupal_get_path_alias('node/' . $node->nid), array('absolute' => TRUE));
-          //$Url = drupal_get_path_alias(('node/' . $node->nid), array('absolute' => TRUE), );
-          //$node_test_id ='abtest_headlines'.'_'.$node_id;
-
-          $output .= '<p>'.$node_id.'</p>';
-
-          $output .= '<h4>'.$node_test_id. '</h4>';
-          
-          //it is not real test
-          if ((int)$node_id > 22) {
-            
-    
-            $node->title = $headingA;
-            $path = url(drupal_get_path_alias('node/' . $node->nid), array(
-                'query' => array (
-                'utm_source'=>'Home Page',
-                'utm_medium'=>'website',
-                'utm_campaign'=>'AB Test',
-                'utm_content'=>'HeadlineA'),
-                'absolute' => TRUE,
-              )
-            );
-            $node->path = array('alias' => $path);
+              $node = node_load($node);
               
-            node_save($node);
-           //dpr ($path); $node->path = array('alias' => $path);
-          // $Url = $Url.$ga_tracking_path_A;
-           
-           
-          
-            $output .= '<h3>'.t('TITLE VARIANT A: ').$node->title.'</h3>'.'<p>'.$node->path['alias'].'</p>';
-           
-           // $output .= '<br>'.'<a href="'.$Url.'" target=_blank>'.$Url.'</a>';
-          }
-          else {
-            //dpr ((int)$node_id);
-            $node->title = $headingB;
-            $path = url(drupal_get_path_alias('node/' . $node->nid), array(
-              'query' => array (
-              'utm_source'=>'Home Page',
-              'utm_medium'=>'website',
-              'utm_campaign'=>'AB Test',
-              'utm_content'=>'HeadlineB'),
-              'absolute' => TRUE,
-            )
-          );
-            $node->path = array('alias' => $path);
-            node_save($node);
-            
-           // $Url = $Url.$ga_tracking_path_B;
-           
-           
-            // dpr($node_title);
-            // dpr($Url);
-            
-            $output .= '<h3>'.t('TITLE VARIANT B: ').$node->title.'</h3>'.'<p>'.$node->path['alias'].'</p>';
-
-            //print_r ($node->title);
-            
-            //$output .= '<br>'.'<a href="'.$Url.'" target=_blank>'.$Url.'</a>';
-          }
-          //$output = node_view ($node, $view_mode = 'teaser');
-    
-          
-
-  }
-  return $output;
-  //return node_view_multiple($nodes, 'teaser');
-}
+              
+              //dpr($node);
+              global $base_url;
+              //$node_title = $node->title;
+              $node_id = $node->nid;
+              $node_test_id ='abtest_headlines'.'_'.$node_id;
+              $headingA = $node->field_headline_a[LANGUAGE_NONE] [0] ['value']; // string to be removed
+              $headingB = $node->field_headline_b[LANGUAGE_NONE] [0] ['value']; // string to be removed
+              //display will be removed when it will be unnessesary 
+              $output .= '<p>'.$node_id.'</p>';
+              $output .= '<h4>'.$node_test_id. '</h4>';
+              
+              //it is not real test
+              if ((int)$node_id > 22) {
+                
+        
+                $node->title = $headingA;
+                $path = url(drupal_get_path_alias('node/' . $node->nid), array(
+                    'query' => array (
+                    'utm_source'=>'Home Page',
+                    'utm_medium'=>'website',
+                    'utm_campaign'=>'AB Test',
+                    'utm_content'=>'HeadlineA'),
+                    'absolute' => TRUE,
+                  )
+                );
+                $node->path = array('alias' => $path);//node does not updating url
+                  
+                node_save($node);
+              //dpr ($path); $node->path = array('alias' => $path);
+              
+              $output .= '<h3>'.t('TITLE VARIANT A: ').$node->title.'</h3>'.'<p>'.$node->path['alias'].'</p>';
+              
+              }
+              else {
+                //dpr ((int)$node_id);
+                $node->title = $headingB;
+                $path = url(drupal_get_path_alias('node/' . $node->nid), array(
+                  'query' => array (
+                  'utm_source'=>'Home Page',
+                  'utm_medium'=>'website',
+                  'utm_campaign'=>'AB Test',
+                  'utm_content'=>'HeadlineB'),
+                  'absolute' => TRUE,
+                )
+              );
+                $node->path = array('alias' => $path);
+                node_save($node);
+                
+                $output .= '<h3>'.t('TITLE VARIANT B: ').$node->title.'</h3>'.'<p>'.$node->path['alias'].'</p>';
+                
+              }
+       
+      }
+      return $output;
+      //return node_view_multiple($nodes, 'teaser');
+    }
 
 
 
