@@ -14,15 +14,13 @@
  *      3. field type text   field_headline_a
  *    probably needs to be implemented in .install file - this is posible upgrade
  * 
- *  #  MODULE FUNCTIONALITY  #
+ * # MODULE FUNCTIONALITY #
  * 
  *    module depends on A/B test module 
  *    name = "A/B test (core)
  *    description = An A/B testing API for creating tests quickly in code. 
  *    ---------------------------------------------------------------------
  *   # IN MODULE #
- *
- *    
  *
  *    WE do call all nodes in required conditions by EntityFieldQuery 
  *    with checking all required conditions
