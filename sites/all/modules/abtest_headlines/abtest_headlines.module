@@ -99,19 +99,15 @@ function abtest_headlines_query_nodes() {
     
               $node = node_load($node);
               
-              
-              //dpr($node);
-              global $base_url;
-              //$node_title = $node->title;
               $node_id = $node->nid;
               $node_test_id ='abtest_headlines'.'_'.$node_id;
               $headingA = $node->field_headline_a[LANGUAGE_NONE] [0] ['value']; // string to be removed
               $headingB = $node->field_headline_b[LANGUAGE_NONE] [0] ['value']; // string to be removed
-              //display will be removed when it will be unnessesary 
+              //Output will be removed when it will be unnessesary 
               $output .= '<p>'.$node_id.'</p>';
               $output .= '<h4>'.$node_test_id. '</h4>';
               
-              //it is not real test
+              //it is not real test but emulating behaviour 
               if ((int)$node_id > 22) {
                 
         
