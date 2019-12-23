@@ -5,57 +5,48 @@
  * Implements A/B Testing for the node bundle Blogs when checked to Engage the test (checkbox). And Fields for testing headlines are filled in
  * 
  * V.Charinas
- * 
- * # BEFORE TESTS #
- *  
- *    Create fields for the default Article content type machine name Blogs
- *      1. field type bolean field_ab_test
- *      2. field type text   field_headline_a
- *      3. field type text   field_headline_a
- *    probably needs to be implemented in .install file - this is posible upgrade
- * 
- * # MODULE FUNCTIONALITY #
- * 
- *    module depends on A/B test module 
- *    name = "A/B test (core)
- *    description = An A/B testing API for creating tests quickly in code. 
- *    ---------------------------------------------------------------------
- *   # IN MODULE #
- *
- *    WE do call all nodes in required conditions by EntityFieldQuery 
- *    with checking all required conditions
- *    before performing any tests and checking does it have to be tested and required information is entered 
- *    it is filtred by query but to test fields are not empty will be extra care and helpfull ! Headline A and Headline B not empty !
- * 
- *    1 geting nodes in a loop we are fetching title and url of the filtered Node
- *    2 set the test id for each node required testing
- *    3 run test and modify url to provide GA access to results
- *    4 collect results 
- *    5 display results for node in node tab no additional permissions required
- *    6 display page with all tests results performed on admin accessable page (requires permission view results page)
- * 
- * 
- *  Searching for the nodes with the engaged A/B test on it and gets all required fields
-  * /
-  * getting the required fields to be used in the test
  */
+
 /**
  * Implements hook_menu().
  */
 
-function abtest_headlines_menu() {
+function abtest_headlines_menu() { 
+  // This is just for testing module actualy tests will perform on front page
   $items = array();
   $items['abtest-headlines'] = array(
-    'title' => 'A/B test example',
+    'title' => 'A/B Headlines Test',
     'description' => 'Demonstrates using the abtest module.',
     'access callback' => TRUE,
     'page callback' => 'abtest_headlines_results_node_tab',
     'type' => MENU_NORMAL_ITEM,
   );
+  $items['node/%node/abtest'] = array(
+    'title' => 'A/B Test',
+    'description' => 'Demonstrates A/B Test Results.',
+    //'access callback' => TRUE,//'_abtest_headlines_menu_access',
+    'page callback' => 'abtest_headlines_results_node_tab',
+    //'page callback' => '_abtest_headlines_menu_access',
+    'access arguments' => array('access a/b test results'),
+    'type' =>  MENU_LOCAL_TASK,
+    'weight' => 10,
+    
+  );
 
     return $items;
 }
-
+/**
+ * Implements hook_permission().
+ */
+function abtest_headlines_permission() {
+  return array(
+    'access a/b test results' => array(
+      'title' => t('Access A/B test results'),
+      'description' => t('May view Results for the node.'),
+    ),
+    
+  );
+}
 /*
 *  Implements EntityFieldQuery results
 */
@@ -106,7 +97,7 @@ function abtest_headlines_query_nodes() {
               $output .= '<h4>'.$node_test_id. '</h4>';
               
               //it is not real test but emulating behaviour 
-              if ((int)$node_id > 22) {
+              if ((int)$node_id > 21) {
                 
         
                 $node->title = $headingA;
@@ -119,7 +110,7 @@ function abtest_headlines_query_nodes() {
                     'absolute' => TRUE,
                   )
                 );
-                $node->path = array('alias' => $path);//node does not updating url
+                $node->path = array('alias' => $path); //node does not updating url because pathouto is active here  we need to turn it off.
                   
                 node_save($node);
               //dpr ($path); $node->path = array('alias' => $path);
@@ -153,21 +144,6 @@ function abtest_headlines_query_nodes() {
 
 
 
-  /*
-  *  Generates conversion page for the admin 
-  */
-  
-  // function abtest_headlines_admin_dashboard () {
-  //   //abtest_track_conversion('abtest_example');
-
-
-  //   return  '<h2>' . t('Admin dashboard should be here.') . '</h2>';
-
-  // }
-    
-   
-   
-  // }
   
  /**
   * Generates A/B test for the Nodes 
