@@ -70,7 +70,7 @@ function abtest_headlines_query_nodes() {
   }
 
 /*
-*   Implements test page
+*   Implements Node test result page but actualy that will be done by views
 */
   function abtest_headlines_results_node_tab() {
         //abtest_track_conversion('abtest_example'); //that will be counting results
@@ -80,7 +80,23 @@ function abtest_headlines_query_nodes() {
         $node_title ='';
         $headingA = '';
         $headingB = '';
+        //$alias = drupal_get_path_alias('node/' . $node->nid);
+        $queryA = array(
+          
+          'utm_source'=>'Home Page',
+          'utm_medium'=>'website',
+          'utm_campaign'=>'AB Test',
+          'utm_content'=>'HeadlineA'
+        );
+        $queryB = array(
+          
+          'utm_source'=>'Home Page',
+          'utm_medium'=>'website',
+          'utm_campaign'=>'AB Test',
+          'utm_content'=>'HeadlineB'
+        );
         $output = '';//lets display them
+        $output = array();
         //getting required nodes to test
         $nodes = array_keys( abtest_headlines_query_nodes()['node']); //reusing query in function
     
@@ -90,53 +106,45 @@ function abtest_headlines_query_nodes() {
               
               $node_id = $node->nid;
               $node_test_id ='abtest_headlines'.'_'.$node_id;
+              $alias = drupal_get_path_alias('node/' . $node->nid);
               $headingA = $node->field_headline_a[LANGUAGE_NONE] [0] ['value']; // string to be removed
               $headingB = $node->field_headline_b[LANGUAGE_NONE] [0] ['value']; // string to be removed
               //Output will be removed when it will be unnessesary 
-              $output .= '<p>'.$node_id.'</p>';
-              $output .= '<h4>'.$node_test_id. '</h4>';
+              //$output .= '<p>'.$node_id.'</p>';
+              //$output .= '<h4>'.$node_test_id. '</h4>';
               
               //it is not real test but emulating behaviour 
-              if ((int)$node_id > 21) {
-                
+              //if ((int)$node_id > 21) {
+                if (abtest($node_test_id)) {
         
                 $node->title = $headingA;
-                $path = url(drupal_get_path_alias('node/' . $node->nid), array(
-                    'query' => array (
-                    'utm_source'=>'Home Page',
-                    'utm_medium'=>'website',
-                    'utm_campaign'=>'AB Test',
-                    'utm_content'=>'HeadlineA'),
-                    'absolute' => TRUE,
-                  )
-                );
-                $node->path = array('alias' => $path); //node does not updating url because pathouto is active here  we need to turn it off.
+               
+                $node->path = array('alias' => $alias, 'query' => $queryA, 'pathauto' => FALSE, 'absolute' => TRUE); //node does not updating url because pathouto is active here  we need to turn it off. when pathouto is off url is updating three with query but 
                   
                 node_save($node);
+                //dpr ($node->path);
               //dpr ($path); $node->path = array('alias' => $path);
+               
               
-              $output .= '<h3>'.t('TITLE VARIANT A: ').$node->title.'</h3>'.'<p>'.$node->path['alias'].'</p>';
+              //$output .= '<h3>'.t('TITLE VARIANT A: ').$node->title.'</h3>';
               
               }
               else {
                 //dpr ((int)$node_id);
                 $node->title = $headingB;
-                $path = url(drupal_get_path_alias('node/' . $node->nid), array(
-                  'query' => array (
-                  'utm_source'=>'Home Page',
-                  'utm_medium'=>'website',
-                  'utm_campaign'=>'AB Test',
-                  'utm_content'=>'HeadlineB'),
-                  'absolute' => TRUE,
-                )
-              );
-                $node->path = array('alias' => $path);
+               
+                $node->path = array('alias' => $alias, 'query' => $queryB,'pathauto' => FALSE, 'absolute' => TRUE);  // Why query is not displays????
                 node_save($node);
+                //dpr ($node->path);
                 
-                $output .= '<h3>'.t('TITLE VARIANT B: ').$node->title.'</h3>'.'<p>'.$node->path['alias'].'</p>';
+
+                //$output .= '<h3>'.t('TITLE VARIANT B: ').$node->title.'</h3>'.'<p>'.''.'</p>';
+                
                 
               }
-       
+              //$view = node_view($node,'teaser');
+              $view = node_view_multiple(node_load_multiple($nodes), 'teaser');
+              $output = drupal_render($view);
       }
       return $output;
       //return node_view_multiple($nodes, 'teaser');
