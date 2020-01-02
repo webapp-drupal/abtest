@@ -62,4 +62,32 @@ $node->path = array('alias' => $path);
 node_save($node);
 
 
+
+
+$path = array(
+  'source' => "node/{$node->nid}",
+  'alias' => $alias,  // Any alias that you want to set.
+  'language' => $lang_code,  // Optional, if you are working on a multilingual site.
+);
+path_save($path);
+
+
+
+$node->path['pathauto'] = FALSE;
+
+$queryA = array(
+  'query' => array (
+  'utm_source'=>'Home Page',
+  'utm_medium'=>'website',
+  'utm_campaign'=>'AB Test',
+  'utm_content'=>'HeadlineA')
+);
+$queryB = array(
+  'query' => array (
+  'utm_source'=>'Home Page',
+  'utm_medium'=>'website',
+  'utm_campaign'=>'AB Test',
+  'utm_content'=>'HeadlineB')
+);
+
 ?>

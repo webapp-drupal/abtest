@@ -12,7 +12,7 @@
     name = "A/B test (core)
     description = An A/B testing API for creating tests quickly in code. 
     name ="A/B Test Reporting dashboard"
-    description = A simple reporting dashboard for A/B tests.
+    description = A simple reporting dashboard for A/B tests.web.
   
     
 # IN MODULE #
