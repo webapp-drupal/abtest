@@ -74,7 +74,7 @@ path_save($path);
 
 
 $node->path['pathauto'] = FALSE;
-
+// utm_source=Home%20Page&utm_medium=website&utm_campaign=AB%20Test&utm_content=HeadlineA"
 $queryA = array(
   'query' => array (
   'utm_source'=>'Home Page',
@@ -82,6 +82,7 @@ $queryA = array(
   'utm_campaign'=>'AB Test',
   'utm_content'=>'HeadlineA')
 );
+// utm_source=Home%20Page&utm_medium=website&utm_campaign=AB%20Test&utm_content=HeadlineB"
 $queryB = array(
   'query' => array (
   'utm_source'=>'Home Page',
