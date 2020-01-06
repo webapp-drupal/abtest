@@ -69,10 +69,23 @@ function abtest_headlines_query_nodes() {
   
   }
 
+  /**
+   * Implements hook_init().
+   */
+  function abtest_headlines_init() {
+ 
+  
+   /* Your code here */
+
+   if (drupal_is_front_page()) {
+         // drupal_set_message(t('This is a front page'));
+     }
+  }
+
 /*
-*   Implements Node test result page but actualy that will be done by views
+*   Implements Node Full mode callback fro the conversion result suggestions
 */
-  function abtest_headlines_results_node_tab() {
+  function abtest_headlines_results_node_view() {
         //abtest_track_conversion('abtest_example'); //that will be counting results
 
        
@@ -80,21 +93,7 @@ function abtest_headlines_query_nodes() {
         $node_title ='';
         $headingA = '';
         $headingB = '';
-        //$alias = drupal_get_path_alias('node/' . $node->nid);
-        $queryA = array(
-          
-          'utm_source'=>'Home Page',
-          'utm_medium'=>'website',
-          'utm_campaign'=>'AB Test',
-          'utm_content'=>'HeadlineA'
-        );
-        $queryB = array(
-          
-          'utm_source'=>'Home Page',
-          'utm_medium'=>'website',
-          'utm_campaign'=>'AB Test',
-          'utm_content'=>'HeadlineB'
-        );
+        
         $output = '';//lets display them
         $output = array();
         //getting required nodes to test
@@ -106,16 +105,17 @@ function abtest_headlines_query_nodes() {
               
               $node_id = $node->nid;
               $node_test_id ='abtest_headlines'.'_'.$node_id;
-              $alias = drupal_get_path_alias('node/' . $node->nid);
+              $node_test_conversion_id = $node_test_id;
               $headingA = $node->field_headline_a[LANGUAGE_NONE] [0] ['value']; // string to be removed
               $headingB = $node->field_headline_b[LANGUAGE_NONE] [0] ['value']; // string to be removed
               
                 if (abtest($node_test_id)) {
         
-                $node->title = $headingA;
+                $node->title = $headingA; // on live we will be changing Promo headline (for homepage) field
+                //No need to change url pass here
+                
+               // $node->path = array('alias' => $alias, 'query' => $queryA, 'pathauto' => FALSE, 'absolute' => TRUE); //node does not updating url because pathouto is active here  we need to turn it off. when pathouto is off url is updating but utm params not showing 
                
-                $node->path = array('alias' => $alias, 'query' => $queryA, 'pathauto' => FALSE, 'absolute' => TRUE); //node does not updating url because pathouto is active here  we need to turn it off. when pathouto is off url is updating but utm params not showing 
-                  
                 node_save($node);
                
               
@@ -127,11 +127,6 @@ function abtest_headlines_query_nodes() {
                 $node->path = array('alias' => $alias, 'query' => $queryB,'pathauto' => FALSE, 'absolute' => TRUE);  // Why query is not displays????
                 node_save($node);
                 //dpr ($node->path);
-                
-
-                
-                
-                
               }
              
               $view = node_view_multiple(node_load_multiple($nodes), 'teaser');

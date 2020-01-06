@@ -279,7 +279,7 @@
 * @ingroup node_api_hooks
 */
 function hook_node_view_alter(&$build) { 
-  if ($build ['#view_mode'] == 'full' && isset($build ['field_image'])) { // here i need to set the logic to identify tested nodes
+  if ($build ['#view_mode'] == 'full' && isset($build ['field_image'])) { // here i need to set the logic to identify tested
     // Change its weight.
     $build ['field_image']['#weight'] = -10;
   }
