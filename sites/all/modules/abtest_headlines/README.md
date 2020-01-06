@@ -21,9 +21,11 @@
     4  View conditional - with configuration
     Views: Views Conditional (If field_promo_title is Contains [field_headline_a], output [field_headline_a], else output [field_headline_b])
 
-    output for the [field_headline_a] <h3><a href="[path]?utm_source=Home%20Page&utm_medium=website&utm_campaign=AB%20Test&utm_content=HeadlineA">[field_headline_a]</a></h3>
+    Output for the [field_headline_a]
+    <h3><a href="[path]?utm_source=Home%20Page&utm_medium=website&utm_campaign=AB%20Test&utm_content=HeadlineA">[field_headline_a]</a></h3>
 
-    output for the [field_headline_b] <h3><a href="[path]?utm_source=Home%20Page&utm_medium=website&utm_campaign=AB%20Test&utm_content=HeadlineB">[field_headline_b]</a></h3>
+    Output for the [field_headline_b]
+    <h3><a href="[path]?utm_source=Home%20Page&utm_medium=website&utm_campaign=AB%20Test&utm_content=HeadlineB">[field_headline_b]</a></h3>
 
     5  Views for the Admin page conversion report
 
@@ -177,19 +179,28 @@
     description = An A/B testing API for creating tests quickly in code. 
     name ="A/B Test Reporting dashboard"
     description = A simple reporting dashboard for A/B tests.web.
+
+  
   
     
 # IN MODULE #
  
-    WE do call all nodes in required conditions by EntityFieldQuery 
-    with checking all required conditions
-    before performing any tests and checking does it have to be tested and required information is entered 
-    it is filtred by query but to test fields are not empty will be extra care and helpfull ! Headline A and Headline B not empty !
- 
-    1 geting nodes in a loop we are fetching title and url of the filtered Node
-    2 set the test id for each node required testing
-    3 run test and modify url to provide GA access to results
-    4 collect results 
-    5 display results for node in node tab no additional permissions required
-    6 display page with all tests results performed on admin accessable page (requires permission view results page)
+    WE do call all nodes in required conditions by EntityFieldQuery with conditions that the node is used to perform the A/B test and required fielsds are filled
+    
+    1 Geting nodes in a loop we are fetching headlines 
+    2 Set the test id for each node required A/B testing
+    3 Run multiple test in core (More info in A/B test functionality)
+    4 Collecting results on page callback on node full view mode 
+    5 Display results for node in Reports admin/reports/abtests
+    6 Collect the Campaign results via the utm code in node Url
+
+
+# A/B TEST FUNCTIONALITY #
+
+ABTEST MODULE function abtest('TEST ID'); and abtest_track_conversion('TEST CONVERSION ID'); performs the test itself
+
+# TESTING THE ABTEST_HEADLINES MODULE #
+
+After successful installation and cms configuration create or edit Default Article with A/B test checkbox checked and all fields to be filled
+after that just go to the front page from differend browsers and defferent ip addresses you should be able to see Headlines  you are settuped for testing than go to reports and see result
  
