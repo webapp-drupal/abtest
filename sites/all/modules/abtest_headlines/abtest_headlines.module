@@ -8,34 +8,6 @@
  */
 
 /**
- * Implements hook_menu().
- */
-
-function abtest_headlines_menu() { 
-  // This is just for testing module actualy tests will perform on front page
-  $items = array();
-  $items['abtest-headlines'] = array(
-    'title' => 'A/B Headlines Test',
-    'description' => 'Demonstrates using the abtest module.',
-    'access callback' => TRUE,
-    'page callback' => 'abtest_headlines_results_node_tab',
-    'type' => MENU_NORMAL_ITEM,
-  );
-  $items['node/%node/abtest'] = array(
-    'title' => 'A/B Test',
-    'description' => 'Demonstrates A/B Test Results.',
-    //'access callback' => TRUE,//'_abtest_headlines_menu_access',
-    'page callback' => 'abtest_headlines_results_node_tab',
-    //'page callback' => '_abtest_headlines_menu_access',
-    'access arguments' => array('access a/b test results'),
-    'type' =>  MENU_LOCAL_TASK,
-    'weight' => 10,
-    
-  );
-
-    return $items;
-}
-/**
  * Implements hook_permission().
  */
 function abtest_headlines_permission() {
@@ -74,67 +46,63 @@ function abtest_headlines_query_nodes() {
    */
   function abtest_headlines_init() {
  
-  
-   /* Your code here */
+  $node_id = '';
+  $headingA = '';
+  $headingB = '';
 
-   if (drupal_is_front_page()) {
-         // drupal_set_message(t('This is a front page'));
-     }
+  $nodes = array_keys( abtest_headlines_query_nodes()['node']); //reusing query in function
+
+  foreach ($nodes as $node){
+    
+    $node = node_load($node);
+    
+    $node_id = $node->nid;
+    $node_test_id ='abtest_headlines'.'_'.$node_id;
+    
+    $headingA = $node->field_headline_a[LANGUAGE_NONE] [0] ['value']; // string to be removed
+    $headingB = $node->field_headline_b[LANGUAGE_NONE] [0] ['value']; // string to be removed
+    
+      if (abtest($node_test_id)) {
+
+      $node->field_promo_title[LANGUAGE_NONE] [0] ['value'] = $headingA; // on live we will be changing Promo headline (for homepage) field
+      node_save($node);
+     
+    
+      }
+      else {
+      
+        $node->field_promo_title[LANGUAGE_NONE] [0] ['value'] = $headingB;
+        node_save($node);
+      
+      }
+
+  
   }
 
-/*
-*   Implements Node Full mode callback fro the conversion result suggestions
-*/
-  function abtest_headlines_results_node_view() {
-        //abtest_track_conversion('abtest_example'); //that will be counting results
+}
 
-       
-        $node_id = '';
-        $node_title ='';
-        $headingA = '';
-        $headingB = '';
-        
-        $output = '';//lets display them
-        $output = array();
-        //getting required nodes to test
-        $nodes = array_keys( abtest_headlines_query_nodes()['node']); //reusing query in function
+/**
+ * Implements hook_node_view_alter().
+ */
+function abtest_headlines_node_view_alter(&$build) {
+  
+  if ($build['#view_mode'] == 'full' ) {
+
+    $nodes = array_keys( abtest_headlines_query_nodes()['node']);
+      foreach ($nodes as $node){
     
-            foreach ($nodes as $node){
-    
-              $node = node_load($node);
-              
-              $node_id = $node->nid;
-              $node_test_id ='abtest_headlines'.'_'.$node_id;
-              $node_test_conversion_id = $node_test_id;
-              $headingA = $node->field_headline_a[LANGUAGE_NONE] [0] ['value']; // string to be removed
-              $headingB = $node->field_headline_b[LANGUAGE_NONE] [0] ['value']; // string to be removed
-              
-                if (abtest($node_test_id)) {
-        
-                $node->title = $headingA; // on live we will be changing Promo headline (for homepage) field
-                //No need to change url pass here
-                
-               // $node->path = array('alias' => $alias, 'query' => $queryA, 'pathauto' => FALSE, 'absolute' => TRUE); //node does not updating url because pathouto is active here  we need to turn it off. when pathouto is off url is updating but utm params not showing 
-               
-                node_save($node);
-               
-              
-              }
-              else {
-                //dpr ((int)$node_id);
-                $node->title = $headingB;
-               
-                $node->path = array('alias' => $alias, 'query' => $queryB,'pathauto' => FALSE, 'absolute' => TRUE);  // Why query is not displays????
-                node_save($node);
-                //dpr ($node->path);
-              }
-             
-              $view = node_view_multiple(node_load_multiple($nodes), 'teaser');
-              $output = drupal_render($view);
-      }
-      return $output;
-     
+        $node = node_load($node);
+      
+        $node_id = $node->nid;
+        $node_test_id ='abtest_headlines'.'_'.$node_id;
+        $node_test_conversion_id = $node_test_id;
+
+      abtest_track_conversion($node_test_conversion_id); 
+
     }
+  }
+}
+
 
 
 
