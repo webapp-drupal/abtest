@@ -172,17 +172,6 @@
 
 
 
-# MODULE FUNCTIONALITY #
- 
-    module depends on:
-    name = "A/B test (core)
-    description = An A/B testing API for creating tests quickly in code. 
-    name ="A/B Test Reporting dashboard"
-    description = A simple reporting dashboard for A/B tests.web.
-
-  
-  
-    
 # IN MODULE #
  
     WE do call all nodes in required conditions by EntityFieldQuery with conditions that the node is used to perform the A/B test and required fielsds are filled
@@ -197,10 +186,11 @@
 
 # A/B TEST FUNCTIONALITY #
 
-ABTEST MODULE function abtest('TEST ID'); and abtest_track_conversion('TEST CONVERSION ID'); performs the test itself
+    ABTEST MODULE function abtest('TEST ID'); and abtest_track_conversion('TEST CONVERSION ID'); performs the test itself
 
 # TESTING THE ABTEST_HEADLINES MODULE #
 
-After successful installation and cms configuration create or edit Default Article with A/B test checkbox checked and all fields to be filled
-after that just go to the front page from differend browsers and defferent ip addresses you should be able to see Headlines  you are settuped for testing than go to reports and see result
- 
+    After successful installation and cms configuration create or edit Default Article with A/B test checkbox checked and all fields to be filled
+    Than as our frontpage made from views blocks we are running the tests on abtest_headlines module load and checking wholle the content which meets requirements listed earlier   
+    after that just go to the front page from differend browsers and defferent ip addresses you should be able to see Headlines  you are settuped for testing than go to reports and see result
+    
