@@ -192,5 +192,7 @@
 
     After successful installation and cms configuration create or edit Default Article with A/B test checkbox checked and all fields to be filled
     Than as our frontpage made from views blocks we are running the tests on abtest_headlines module load and checking wholle the content which meets requirements listed earlier   
-    after that just go to the front page from differend browsers and defferent ip addresses you should be able to see Headlines  you are settuped for testing than go to reports and see result
+    1. Go to the front page from differend browsers and defferent ip addresses you should be able to see Headlines you are settuped for testing 
+    2. Go to reports in Admin -> Reports -> A/B Tests Results check the All results
+    3. Go in top the Article where A/B test is enaibled in Article tabs find A/B test tab with the particular Article test results
     

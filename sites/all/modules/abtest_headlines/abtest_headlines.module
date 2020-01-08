@@ -7,6 +7,24 @@
  * V.Charinas
  */
 
+ /**
+  * Implements hook_menu().
+  */
+ function abtest_headlines_menu() {
+ // Tab for the result on A/B test 
+  $items = array();
+    $items['node/%node/abtest-result'] = array(
+        'title' => 'A/B Test',
+        'description' => 'Headline A/B Test Results',
+        'access callback' => TRUE,//'_abtest_headlines_menu_access',
+        'page callback' => 'abtest_headlines_node_results',
+        'type' =>  MENU_LOCAL_TASK,
+        'weight' => 10,
+        
+      );
+      return $items;
+ }
+
 /**
  * Implements hook_permission().
  */
@@ -36,7 +54,6 @@ function abtest_headlines_query_nodes() {
           ->fieldCondition('field_headline_b', 'value', '', '!=')
           ->execute();
   
-  
           return $result;
   
   }
@@ -50,7 +67,7 @@ function abtest_headlines_query_nodes() {
   $headingA = '';
   $headingB = '';
 
-  $nodes = array_keys( abtest_headlines_query_nodes()['node']); //reusing query in function
+  $nodes = array_keys( abtest_headlines_query_nodes()['node']); 
 
   foreach ($nodes as $node){
     
@@ -59,24 +76,22 @@ function abtest_headlines_query_nodes() {
     $node_id = $node->nid;
     $node_test_id ='abtest_headlines'.'_'.$node_id;
     
-    $headingA = $node->field_headline_a[LANGUAGE_NONE] [0] ['value']; // string to be removed
-    $headingB = $node->field_headline_b[LANGUAGE_NONE] [0] ['value']; // string to be removed
+    $headingA = $node->field_headline_a[LANGUAGE_NONE] [0] ['value']; 
+    $headingB = $node->field_headline_b[LANGUAGE_NONE] [0] ['value'];
     
       if (abtest($node_test_id)) {
-
-      $node->field_promo_title[LANGUAGE_NONE] [0] ['value'] = $headingA; // on live we will be changing Promo headline (for homepage) field
+        // changing the promo fro the A headline
+      $node->field_promo_title[LANGUAGE_NONE] [0] ['value'] = $headingA; 
       node_save($node);
      
     
       }
       else {
-      
+        // changing the promo fro the B headline
         $node->field_promo_title[LANGUAGE_NONE] [0] ['value'] = $headingB;
         node_save($node);
       
       }
-
-  
   }
 
 }
@@ -87,7 +102,7 @@ function abtest_headlines_query_nodes() {
 function abtest_headlines_node_view_alter(&$build) {
   
   if ($build['#view_mode'] == 'full' ) {
-
+    //checking node in full mode and checking that node not just created
     $nodes = array_keys( abtest_headlines_query_nodes()['node']);
       foreach ($nodes as $node){
     
@@ -96,16 +111,27 @@ function abtest_headlines_node_view_alter(&$build) {
         $node_id = $node->nid;
         $node_test_id ='abtest_headlines'.'_'.$node_id;
         $node_test_conversion_id = $node_test_id;
-
+      // conversion of each test
       abtest_track_conversion($node_test_conversion_id); 
 
     }
   }
 }
 
+/**
+ *  Implements A/B test node result page callback
+ */
 
 
+ function abtest_headlines_node_results() {
+  //query the tests id and then fetch the one where test Name contains with the node id 
+  $output = '';
 
+  $output .= '<h2> A/B Result page </h2>';
   
+  return $output;
+
+
+ } 
 
 
