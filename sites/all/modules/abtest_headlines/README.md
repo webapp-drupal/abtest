@@ -9,7 +9,7 @@
 
 
     CMS Configuration
-    Create fields for the default Article content type machine name Blogs
+    Create fields for the Default Article content type machine name Blogs
     1. field type bolean field_ab_test
     2. field type text   field_headline_a
     3. field type text   field_headline_a
@@ -180,13 +180,16 @@
     2 Set the test id for each node required A/B testing
     3 Run multiple test in core (More info in A/B test functionality)
     4 Collecting results on page callback on node full view mode 
-    5 Display results for node in Reports admin/reports/abtests
-    6 Collect the Campaign results via the utm code in node Url
+    5 Display results of the Tests in Reports admin/reports/abtests
+    6 Providing results on node tab about exact node A/B Test
+    7 Collect the Campaign results via the utm code in node Url
 
 
 # A/B TEST FUNCTIONALITY #
 
     ABTEST MODULE function abtest('TEST ID'); and abtest_track_conversion('TEST CONVERSION ID'); performs the test itself
+    ABTEST HEADLINES module gets the nodes of the Default Article (machine name 'blogs')and setting them for the test 
+    ABTEST DASHBOARD in views fetching results and displays to the user
 
 # TESTING THE ABTEST_HEADLINES MODULE #
 
