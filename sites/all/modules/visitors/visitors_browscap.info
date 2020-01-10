@@ -1,0 +1,12 @@
+name = Visitors Browscap
+description = Add browsers capabilities reports to stats (EXPERIMENTAL).
+package = "Visitors"
+core = "7.x"
+dependencies[] = visitors
+
+; Information added by Drupal.org packaging script on 2014-04-26
+version = "7.x-2.0-alpha9"
+core = "7.x"
+project = "visitors"
+datestamp = "1398491034"
+

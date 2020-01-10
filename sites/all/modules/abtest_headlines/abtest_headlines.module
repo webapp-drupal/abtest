@@ -62,6 +62,8 @@ function abtest_headlines_query_nodes() {
    * Implements hook_init().
    */
   function abtest_headlines_init() {
+
+   // echo ('Running test');
  
   $node_id = '';
   $headingA = '';
@@ -78,7 +80,7 @@ function abtest_headlines_query_nodes() {
     
     $headingA = $node->field_headline_a[LANGUAGE_NONE] [0] ['value']; 
     $headingB = $node->field_headline_b[LANGUAGE_NONE] [0] ['value'];
-    
+  
       if (abtest($node_test_id)) {
         // changing the promo fro the A headline
       $node->field_promo_title[LANGUAGE_NONE] [0] ['value'] = $headingA; 

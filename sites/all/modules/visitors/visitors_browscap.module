@@ -1,0 +1,64 @@
+<?php
+
+/**
+ * @file
+ * Visitors browscap module menu configuration.
+ */
+
+require_once dirname(__FILE__) . '/visitors_browscap.requirements.inc';
+
+/**
+ * Implements hook_permission().
+ */
+function visitors_browscap_permission() {
+  return array(
+    'access visitors browser'  => array('title' => t('View browser report')),
+    'access visitors platform' => array('title' => t('View platform report')),
+  );
+}
+
+/**
+ * Menu callback. Prints a listing of active nodes on the site.
+ */
+function visitors_browscap_menu() {
+  $items = array();
+
+  $items['visitors/browser'] = array(
+    'title' => 'Browser',
+    'description' => 'Browser statistics.',
+    'page callback' => 'visitors_browser',
+    'access arguments' => array('access visitors browser'),
+    'file' => 'visitors.admin.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  $items['visitors/browser/chart'] = array(
+    'title' => 'Browser',
+    'description' => 'Browser statistics.',
+    'page callback' => 'chart_visitors_browser',
+    'access arguments' => array('access visitors browser'),
+    'file' => 'visitors.admin.inc',
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['visitors/platform'] = array(
+    'title' => 'Platform',
+    'description' => 'View pages count per platform.',
+    'page callback' => 'visitors_platform',
+    'access arguments' => array('access visitors platform'),
+    'file' => 'visitors.admin.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  $items['visitors/platform/chart'] = array(
+    'title' => 'Platform',
+    'description' => 'View pages count per platform.',
+    'page callback' => 'chart_visitors_platform',
+    'access arguments' => array('access visitors platform'),
+    'file' => 'visitors.admin.inc',
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
