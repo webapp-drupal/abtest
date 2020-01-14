@@ -1,25 +1,26 @@
-# Module objectives #
+# Module objectives 
 **Name: Visitor Profile**
-Create profile when vitor  votes on poll
-collect geo information
-creates ability to ask personal information on polls vote submit
-create chart with the answers
+Create profile for the anonimous visitor when poll voited. Collect all votes and page visits on profile. Collect geo location via GEOIP2. Collect personal information and store it in proifile
+
 
 # Requirements
 
 GeoIP2 Library and account is for to track visitor location by ip
-Custom Entityies:
+
+# Custom Entityies:
 
 **Profile**
-properties :  id host created  
+properties :  id host time_created  
 fields : geo_location, tags(from url's visited), personal_info_fields multivalued fieldset (fetched from polls)
 
 **Visits**
 properties : id profile_id time_visited url_visited
 
-Extend poll node by checkbox whether question is for anonimous visitor profile 
-on check box we will add a field to the all profiles according on question and will record the  answers according on host and cookie
-so we could track as many visitors from ip but from diferebnt browsers or devices
+**Extending Polls functionality**
+Alter the form for the creation off polls. Extend poll node by checkbox whether question is for anonimous visitor profile 
+on check box open field to fill the personal question add form to submit habdler to collect personal questions answer
+save the answer in profile. Save poll answer to the  profile
+
 
     
 
