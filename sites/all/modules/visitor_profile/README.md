@@ -24,8 +24,8 @@ save the answer in profile. Save poll answer to the  profile
 
 On time of voiting:
 
-1. Add form to collect personal answer to  voitig form - check if personal question is added if yes point 3 if no do only 2 point
-2. Create record for the anonimous visitor - check record for the host already exists 
+1. Add form to collect personal answer after voitig - check if personal question is added show form to collect the answer and point 3 if no do only 2 point
+2. Create record for the anonimous visitor - check record for the host already exists store the vote choice  
 3. Add personal question to the Proifile
 
     
