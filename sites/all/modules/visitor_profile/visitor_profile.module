@@ -5,3 +5,91 @@
  * Implements visitor profile creating functionality
  * V.Charinas
  */
+
+ /**
+  * Implements hook_form_FORM_ID_alter().
+  */
+ function visitor_profile_form_alter (&$form, &$form_state, $form_id) {
+            dpm($form_id);//get the form_id
+        
+            //hook the poll form
+        if ($form_id =='poll_node_form') {
+   
+
+            $form['settings']['personal_question_checkbox'] = array (
+                '#type' => 'checkbox',
+                '#title'=> t('Add personal question on submit'),
+                
+                
+            );
+        
+            $form['settings']['personal_question'] = array (
+                '#type' => 'textfield',
+                '#title' => t('Personal Question'),
+                '#required' => FALSE,
+                '#description' => t('Add personal; question to get answer recorded in visitor profile'),
+                '#states' => array(
+                    'visible' => array(
+                    ':input[name="personal_question_checkbox"]' => array('checked' => TRUE),
+                    ),
+                ),
+            );
+
+        
+
+            
+            return $form;
+    } elseif ($form_id == 'poll_view_voting') {
+
+            $form['vote']['#submit'] = array('visitor_profile_submit_handler','poll_vote');
+        
+        
+            return $form;
+
+
+    }
+ }
+
+ 
+
+ function visitor_profile_submit_handler() {
+
+    drupal_set_message(t("WE are in!"));
+
+ }
+
+/**
+ *  personal question form for poll
+ *  @ingroup forms
+ *  @see visitor_profile_personal()
+ */
+
+function visitor_profile_personal_form($form, &$form_state, $nid){
+    //build our form
+    $form_state['cache'] = TRUE;
+
+  // Store the nid so we can get to it in submit functions.
+    $form['#nid'] = $nid;
+    $form['answer'] = array (
+        '#type' => 'textfield',
+        '#title' => t('Your Answer'),
+
+    );
+    $form['actions'] = array('#type' => 'actions');
+    $form['actions']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Submit your answer'),
+    '#submit' => array('')
+  );
+
+  return $form;
+}
+
+
+
+function visitor_profile_personal() {
+
+    drupal_set_message(t('yehh for fucks sake'));
+
+}
+ 

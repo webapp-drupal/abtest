@@ -22,5 +22,16 @@ on check box open field to fill the personal question add form to submit habdler
 save the answer in profile. Save poll answer to the  profile
 
 
+On time of voiting:
+
+1. Add form to collect personal answer to  voitig form - check if personal question is added if yes point 3 if no do only 2 point
+2. Create record for the anonimous visitor - check record for the host already exists 
+3. Add personal question to the Proifile
+
     
+On time of creating Profile for the visitor:
+
+Fetch Host ip
+Detect Geolocation
+Record personal question in profile
 
