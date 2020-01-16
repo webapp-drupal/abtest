@@ -31,7 +31,7 @@
   <?php if (!empty($cancel_form)): ?>
     <?php print $cancel_form; ?>
   <?php endif; ?>
-  <?php if (!empty($personal_question_form)): ?>
-    <?php print $personal_question_form; ?>
+  <?php if (!empty($persinal_form)): ?>
+    <?php print $persinal_form; ?>
   <?php endif; ?>
 </div>

@@ -23,8 +23,6 @@
         return $theme;
       }
 
-
-
  /**
   * Implements hook_form_FORM_ID_alter().
   */
@@ -40,14 +38,10 @@
     }
  }
 
- 
-
  function visitor_profile_submit_handler() {
 
     drupal_set_message(t("WE are in! here we have creted the profile for the voited visitor"));
-   
-   
-
+    
  }
 
 /**
@@ -62,7 +56,7 @@ function visitor_profile_personal_form($form, &$form_state, $nid){
     $form['#nid'] = $nid;
     //load node to fetch field
     $node = node_load($nid);
-    dpm($node);
+    
     //build our form
    
 
@@ -88,20 +82,27 @@ function visitor_profile_personal_form($form, &$form_state, $nid){
 function visitor_profile_personal_question_submit_handler() {
 
     drupal_set_message(t('yehh for fucks sake'));
+    drupal_set_message(t('You entered %input', array('%input' => $form_state['values']['answer'])));
 
 }
 
 
 /*
  *  Preprocess Poll results adding personal question if it wass set
+ * 
+ *  Why it's not working fucking  FUUUUUCK!!!!
  */
-// not working FUUUUUUUUUUCCCCKKKKK!!!!!!!!
 
-function template_preprocess_visitor_profile_poll_results(&$variables) {
-    if(isset($variables['vote']) && $variables['vote'] > -1 ) {
-        $elements = drupal_get_form('visitor_profile_personal_form', $variables['nid']);
-        $variables['personal_question_form'] = drupal_render($elements);
-        dpm($elements);
-}
+
+function visitor_profile_preprocess_poll_results(&$variables) {
+
+    $variables['personal_form'] = array();
+    $elements = drupal_get_form('visitor_profile_personal_form', $variables['nid']);
+    $variables['persinal_form'] = drupal_render($elements);
+   
+       // $elements = drupal_get_form('visitor_profile_personal_form', $variables['nid']);
+       // $variables['personal_question_form'] = drupal_render($elements);
+        //dpm($elements);
+
 
 }
