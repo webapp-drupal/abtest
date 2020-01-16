@@ -6,6 +6,45 @@
  * V.Charinas
  */
 
+
+
+/**
+ * Implements hook_theme_registry_alter().
+ */
+// function visitor_profile_theme_registry_alter(&$theme_registry) {
+//     // Defined path to the current module.
+//     $module_path = drupal_get_path('module', 'my_module');
+//     // Find all .tpl.php files in this module's folder recursively.
+//     $template_file_objects = drupal_find_theme_templates($theme_registry, '.tpl.php', $module_path);
+//     // Iterate through all found template file objects.
+//     foreach ($template_file_objects as $key => $template_file_object) {
+//       // If the template has not already been overridden by a theme.
+//       if (!isset($theme_registry[$key]['theme path']) || !preg_match('#/themes/#', $theme_registry[$key]['theme path'])) {
+//         // Alter the theme path and template elements.
+//         $theme_registry[$key]['theme path'] = $module_path;
+//         $theme_registry[$key] = array_merge($theme_registry[$key], $template_file_object);
+//         $theme_registry[$key]['type'] = 'module';
+//       }
+//     }
+//   }
+
+
+/**
+*  Implements hook_theme().
+*/
+    function visitor_profile_theme($existing, $type, $theme, $path) {
+        $theme = array();
+        $theme['poll_results'] = array(
+          'render element' => 'content',
+          'base hook' => 'poll',
+          'template' => 'poll-results--visitor-profile',
+          'path' => drupal_get_path('module', 'visitor_profile') . '/templates',
+         );
+        return $theme;
+      }
+
+
+
  /**
   * Implements hook_form_FORM_ID_alter().
   */
@@ -13,39 +52,10 @@
             //dpm($form_id);//get the form_id
         
             //hook the poll form
-        if ($form_id =='poll_node_form') {
-   
+        if ($form_id == 'poll_view_voting') {
 
-            $form['settings']['personal_question_checkbox'] = array (
-                '#type' => 'checkbox',
-                '#title'=> t('Add personal question on submit'),
-                
-                
-            );
-        
-            $form['settings']['personal_question'] = array (
-                '#type' => 'textfield',
-                '#title' => t('Personal Question'),
-                '#required' => FALSE,
-                '#description' => t('Add personal; question to get answer recorded in visitor profile'),
-                '#states' => array(
-                    'visible' => array(
-                    ':input[name="personal_question_checkbox"]' => array('checked' => TRUE),
-                    ),
-                ),
-            );
-
-        
-
-            
-            return $form;
-    } elseif ($form_id == 'poll_view_voting') {
-
-            $form['vote']['#submit'] = array('visitor_profile_submit_handler','poll_vote');
-        
-        
-            return $form;
-
+                $form['vote']['#submit'] = array('visitor_profile_submit_handler','poll_vote');
+                return $form;
 
     }
  }
@@ -54,7 +64,8 @@
 
  function visitor_profile_submit_handler() {
 
-    drupal_set_message(t("WE are in!"));
+    drupal_set_message(t("WE are in! here we have creted the profile for the voited visitor"));
+   
 
  }
 
@@ -65,11 +76,17 @@
  */
 
 function visitor_profile_personal_form($form, &$form_state, $nid){
-    //build our form
     $form_state['cache'] = TRUE;
-
-  // Store the nid so we can get to it in submit functions.
+    // Store the nid so we can get to it in submit functions.
     $form['#nid'] = $nid;
+    //load node to fetch field
+   $node = node_load($nid);
+    dpm(node_load($nid));
+    //build our form
+   
+
+  
+    $form['title'] = $node->field_personal_question[LANGUAGE_NONE] [0] ['value'];
     $form['answer'] = array (
         '#type' => 'textfield',
         '#title' => t('Your Answer'),
@@ -79,17 +96,29 @@ function visitor_profile_personal_form($form, &$form_state, $nid){
     $form['actions']['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Submit your answer'),
-    '#submit' => array('')
+    '#submit' => array('visitor_profile_personal_question_submit_handler')
   );
-
+  dpm($form);
   return $form;
 }
 
 
 
-function visitor_profile_personal() {
+function visitor_profile_personal_question_submit_handler() {
 
     drupal_set_message(t('yehh for fucks sake'));
 
 }
- 
+
+
+/*
+ *  Preprocess Poll results adding personal question if it wass set
+ */
+
+function visitor_profile_template_preprocess_poll_results(&$variables) {
+    if(isset($variables['vote'])) {
+        $elements = drupal_get_form('visitor_profile_personal_form', $variables['nid']);
+        $variables['personal_question_form'] = drupal_render($elements);
+}
+
+}
