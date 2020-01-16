@@ -24,6 +24,7 @@
 
 ?>
 <div class="poll">
+<h3>Yeah bithches my theme</h3>
   <?php print $results; ?>
   <div class="total">
     <?php print t('Total votes: @votes', array('@votes' => $votes)); ?>

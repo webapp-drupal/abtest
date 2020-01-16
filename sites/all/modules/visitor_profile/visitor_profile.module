@@ -94,15 +94,15 @@ function visitor_profile_personal_question_submit_handler() {
  */
 
 
-function visitor_profile_preprocess_poll_results(&$variables) {
+// function visitor_profile_preprocess_poll_results(&$variables) {
 
-    $variables['personal_form'] = array();
-    $elements = drupal_get_form('visitor_profile_personal_form', $variables['nid']);
-    $variables['persinal_form'] = drupal_render($elements);
+//     $variables['personal_form'] = array();
+//     $elements = drupal_get_form('visitor_profile_personal_form', $variables['nid']);
+//     $variables['persinal_form'] = drupal_render($elements);
    
-       // $elements = drupal_get_form('visitor_profile_personal_form', $variables['nid']);
-       // $variables['personal_question_form'] = drupal_render($elements);
-        //dpm($elements);
+//        // $elements = drupal_get_form('visitor_profile_personal_form', $variables['nid']);
+//        // $variables['personal_question_form'] = drupal_render($elements);
+//         //dpm($elements);
 
 
-}
+// }
