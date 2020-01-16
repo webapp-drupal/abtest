@@ -8,26 +8,6 @@
 
 
 
-/**
- * Implements hook_theme_registry_alter().
- */
-// function visitor_profile_theme_registry_alter(&$theme_registry) {
-//     // Defined path to the current module.
-//     $module_path = drupal_get_path('module', 'my_module');
-//     // Find all .tpl.php files in this module's folder recursively.
-//     $template_file_objects = drupal_find_theme_templates($theme_registry, '.tpl.php', $module_path);
-//     // Iterate through all found template file objects.
-//     foreach ($template_file_objects as $key => $template_file_object) {
-//       // If the template has not already been overridden by a theme.
-//       if (!isset($theme_registry[$key]['theme path']) || !preg_match('#/themes/#', $theme_registry[$key]['theme path'])) {
-//         // Alter the theme path and template elements.
-//         $theme_registry[$key]['theme path'] = $module_path;
-//         $theme_registry[$key] = array_merge($theme_registry[$key], $template_file_object);
-//         $theme_registry[$key]['type'] = 'module';
-//       }
-//     }
-//   }
-
 
 /**
 *  Implements hook_theme().
@@ -66,13 +46,14 @@
 
     drupal_set_message(t("WE are in! here we have creted the profile for the voited visitor"));
    
+   
 
  }
 
 /**
  *  personal question form for poll
  *  @ingroup forms
- *  @see visitor_profile_personal()
+ *  
  */
 
 function visitor_profile_personal_form($form, &$form_state, $nid){
@@ -80,8 +61,8 @@ function visitor_profile_personal_form($form, &$form_state, $nid){
     // Store the nid so we can get to it in submit functions.
     $form['#nid'] = $nid;
     //load node to fetch field
-   $node = node_load($nid);
-    dpm(node_load($nid));
+    $node = node_load($nid);
+    dpm($node);
     //build our form
    
 
@@ -114,11 +95,13 @@ function visitor_profile_personal_question_submit_handler() {
 /*
  *  Preprocess Poll results adding personal question if it wass set
  */
+// not working FUUUUUUUUUUCCCCKKKKK!!!!!!!!
 
-function visitor_profile_template_preprocess_poll_results(&$variables) {
-    if(isset($variables['vote'])) {
+function template_preprocess_visitor_profile_poll_results(&$variables) {
+    if(isset($variables['vote']) && $variables['vote'] > -1 ) {
         $elements = drupal_get_form('visitor_profile_personal_form', $variables['nid']);
         $variables['personal_question_form'] = drupal_render($elements);
+        dpm($elements);
 }
 
 }
