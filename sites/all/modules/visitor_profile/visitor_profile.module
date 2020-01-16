@@ -40,7 +40,7 @@
 
  function visitor_profile_submit_handler() {
 
-    drupal_set_message(t("WE are in! here we have creted the profile for the voited visitor"));
+    drupal_set_message(t("WE are in! here we'll' create the profile for the voited visitor"));
     
  }
 
