@@ -1,0 +1,10 @@
+name = Flot
+description = Provides an API for the flot js graphing library.
+core = 7.x
+package = Charts
+files[] = flot.module
+; Information added by Drupal.org packaging script on 2019-01-11
+version = "7.x-1.3"
+core = "7.x"
+project = "flot"
+datestamp = "1547235484"
