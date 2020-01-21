@@ -7,7 +7,12 @@
 *  Functions:
 *  V. Charinas
 */
-//drupal_set_message (t('User tracking is Connected... '), 'sucsess');
+ //drupal_set_message (t('User tracking is Connected... '), 'sucsess');
+
+/**
+ * Implements hook_boot().
+ */
+    
 function visitor_profile_boot() {
     // loading GEO IP API preconfigured with third party module
  drupal_load('module', 'geoip');

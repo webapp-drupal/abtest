@@ -24,14 +24,34 @@ save the answer in profile. Save poll answer to the  profile
 
 On time of voiting:
 
-1. Add form to collect personal answer after voitig - check if personal question is added show form to collect the answer and point 3 if no do only 2 point
+1. Add form to collect personal answer after voitig - check if personal question is added show form to collect the answer and point 3 if NO -> DO only 2 point
 2. Create record for the anonimous visitor - check record for the host already exists store the vote choice  
-3. Add personal question to the Proifile
+3. Add personal question to the **Proifile**
 
     
-On time of creating Profile for the visitor:
 
-Fetch Host ip
-Detect Geolocation
-Record personal question in profile
+# TO DO #
+
+**Profile** creation on poll  - major task not done
+**On time of creating Profile for the visitor:**
+
+1. Fetch Host ip - almost done
+2. Record the ip in cookie if the ip dinamic (not the same ) we are checking the cookies in the browser are set or not  if YES -> get the cookies ip value if NOT - > record it in cookies and create profile 
+3. Detect Geolocation - almost done
+4. Record personal question in profile - not done
+
+**Profile display**
+1. Queries to display profile on page - not done
+2. Theme for the profile page - not done
+3. Append records for the profile each time poll voted or pages visited - not done
+4. Extract - tags from visited pages and save to the profile - not done
+
+
+
+
+
+
+
+
+
 
