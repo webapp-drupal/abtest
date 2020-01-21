@@ -5,7 +5,14 @@ Create profile for the anonimous visitor when poll voited. Collect all votes and
 
 # Requirements
 
-GeoIP2 Library and account is for to track visitor location by ip
+Poll (core module)
+GeoIP Api module
+Libraries module
+Graph and Charts module
+D3 module
+Views Decorator module
+Decorator module
+
 
 # Custom Entityies:
 
