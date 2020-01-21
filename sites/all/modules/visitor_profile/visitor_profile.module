@@ -6,7 +6,7 @@
  * V.Charinas
  */
 
-    //require dirname(__FILE__) . '/visitor_profile.tracker.inc';
+    require dirname(__FILE__) . '/visitor_profile.tracker.inc';
 /**
  * Implements hook_init().
  */
@@ -23,10 +23,10 @@ function visitor_profile_init() {
  $cookie_path =  $base_url.'/'.current_path();
  //dpm($cookie_path);
  //cookie set for the visitor identification in case dinamic ip is changed 
-//  if (!isset($_COOKIE[$cookie_name])) { 
-//  setcookie($cookie_name, $cookie_value_ip, time() + 31556926, $cookie_path, $cookie_domain); // 31556926 = 1 year;
-//  }
- setcookie($cookie_name, $cookie_value_ip, time() + 31556926, $cookie_path, $cookie_domain, false); // 31556926 = 1 year;
+ if (!isset($_COOKIE[$cookie_name])) { 
+ setcookie($cookie_name, $cookie_value_ip, time() + 31556926, $cookie_path, $cookie_domain); // 31556926 = 1 year;
+ }
+ //setcookie($cookie_name, $cookie_value_ip, time() + 31556926, $cookie_path, $cookie_domain, false); // 31556926 = 1 year;
  
  drupal_set_message (t('Boot fired.. '.$_COOKIE["ns_website"]), 'sucsess');
 
