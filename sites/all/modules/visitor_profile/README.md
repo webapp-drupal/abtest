@@ -42,10 +42,10 @@ On time of voiting:
 **Profile** creation on poll  - major task not done
 **On time of creating Profile for the visitor:**
 
-1. Fetch Host ip - almost done
-2. Record the ip in cookie if the ip dinamic (not the same ) we are checking the cookies in the browser are set or not  if YES -> get the cookies ip value if NOT - > record it in cookies and create profile 
+1. Fetch Host ip - **DONE**
+2. Record the ip in cookie if the ip dinamic (not the same ) we are checking the cookies in the browser are set or not  if YES -> get the cookies ip    value if NOT - > record it in cookies and create profile - **DONE**
 3. Detect Geolocation - almost done
-4. Record personal question in profile - not done
+4. Record personal question in profile - preprocess function has errors almost done
 
 **Profile display**
 1. Queries to display profile on page - not done
