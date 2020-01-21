@@ -7,6 +7,30 @@
  */
 
     //require dirname(__FILE__) . '/visitor_profile.tracker.inc';
+/**
+ * Implements hook_init().
+ */
+    
+function visitor_profile_init() {
+    // loading GEO IP API preconfigured with third party module
+
+ drupal_load('module', 'geoip'); // loading the geoip module
+ global $base_url; 
+ //global $cookie_domain;
+ $cookie_domain = ($_SERVER['HTTP_HOST'] != 'localhost') ? $_SERVER['HTTP_HOST'] : false;
+ $cookie_name = 'ns_website';
+ $cookie_value_ip = geoip_ip_address();
+ $cookie_path =  $base_url.'/'.current_path();
+ //dpm($cookie_path);
+ //cookie set for the visitor identification in case dinamic ip is changed 
+//  if (!isset($_COOKIE[$cookie_name])) { 
+//  setcookie($cookie_name, $cookie_value_ip, time() + 31556926, $cookie_path, $cookie_domain); // 31556926 = 1 year;
+//  }
+ setcookie($cookie_name, $cookie_value_ip, time() + 31556926, $cookie_path, $cookie_domain, false); // 31556926 = 1 year;
+ 
+ drupal_set_message (t('Boot fired.. '.$_COOKIE["ns_website"]), 'sucsess');
+
+}
 
    
 
