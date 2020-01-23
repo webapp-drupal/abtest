@@ -1,0 +1,217 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the visitor_profile module.
+ * V. Charinas
+ */
+
+ 
+function visitor_profile_schema(){
+   
+    $schema['profiles'] = array(
+        'description' =>'Profiles for non authenticated visitors who voted the poll.',
+        'fields' => array(
+            'pid' => array(
+                'type' => 'serial',
+                'not null' => TRUE,
+                'description' => 'Primary Key: Unique profile item ID.',
+            ),
+            'profiles_host' => array(
+                'type' => 'varchar',
+                'length' => 128,
+                'not null' => TRUE,
+                'default' => '',
+                'description' => 'The IP address of the visitor voited.',
+
+            ),
+
+            'created' => array(
+                'type' => 'int',
+                'not null' => TRUE,
+                'default' => 0,
+                'description' => 'The timestamp of the vote creation.',
+              ),
+            
+            'country_name' => array(
+                'type' => 'varchar',
+                'length' => 128,
+                'not null' => TRUE,
+                'default' => '',
+            ),
+
+            'country_code' => array(
+                'type' => 'varchar',
+                'length' => 2,
+                'not null' => TRUE,
+                'default' => '',
+              ),
+            'country_code3' => array(
+                'type' => 'varchar',
+                'length' => 3,
+                'not null' => TRUE,
+                'default' => '',
+              ),
+              
+            'region' => array(
+                'type' => 'varchar',
+                'length' => 128,
+                'not null' => TRUE,
+                'default' => '',
+              ),
+            'city' => array(
+                'type' => 'varchar',
+                'length' => 128,
+                'not null' => TRUE,
+                'default' => '',
+              ),
+            'postal_code' => array(
+                'type' => 'varchar',
+                'length' => 128,
+                'not null' => TRUE,
+                'default' => '',
+              ),
+            'latitude' => array(
+                'type' => 'numeric',
+                'precision' => 13,
+                'scale' => 10,
+                'not null' => TRUE,
+                'default' => 0,
+              ),
+            'longitude' => array(
+                'type' => 'numeric',
+                'precision' => 13,
+                'scale' => 10,
+                'not null' => TRUE,
+                'default' => 0,
+              ),
+            
+
+              
+        ),
+        'primary key' => array('pid'), 
+        'foreign keys' => array(
+          // pointing to poll_vote table 'hostname' column
+          'fk_host' => array (
+             'table' => 'poll_vote',
+             'columns' => array('profiles_host' => 'hostname'),
+          ),
+        ),
+          
+        'indexes' => array(
+          'profiles_host' => array('profiles_host'),
+          'pid' => array('pid'),
+        ),
+        
+        
+          
+    
+    );
+
+    $schema['visits'] = array(
+
+      'description' => 'Visits tracked for the visitor profile.',
+      'fields' => array(
+            'vid' => array(
+                'type' => 'serial',
+                'not null' => TRUE,
+                'description' => 'Primary Key: Unique Visits item ID.',
+            ),
+
+            'pid' => array(
+              'type' => 'int',
+              'unsigned' => TRUE,
+              'not null' => TRUE,
+              'default' => 0,
+              'description' => 'The profile id this visit belongs to.',
+            ),
+
+            'visited_url' => array(
+              'type' => 'text',
+              'not null' => TRUE,
+
+            ),
+
+            'visited_nid' => array(
+              'type' => 'int',
+              'unsigned' => TRUE,
+              'description' => 'The node id visited.',
+            ),
+
+            'visit_time' => array(
+              'type' => 'int',
+              'not null' => TRUE,
+              'default' => 0,
+              'description' => 'The timestamp of the vote creation.',
+            ),
+
+
+
+
+      ),
+
+
+      'primary key' => array('vid'),
+      'foreign keys' => array(
+        //pointing to 'profiles' table column pid
+        'fk_profile_id' => array(
+          'table' => 'profile',
+          'columns' => array ('pid' => 'pid'),
+
+
+        ),
+      ),
+   
+
+
+    );
+
+    $schema['profile_private_answers'] = array(
+      'description' => 'Answers provided by visitor on personal question asked on poll vote',
+      'fields' => array(
+        'id' => array(
+          'type' => 'serial',
+          'not null' => TRUE,
+          'description' => 'Primary Key: Unique profile_private_answers item ID.',
+      ),
+
+        'pid' => array(
+          'type' => 'serial',
+          'not null' => TRUE,
+          'description' => 'Primary Key: Unique profile item ID.',
+        ),
+
+        'poll_nid' => array(
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'description' => 'The poll node id question is.',
+        ),
+
+        'answer_time' => array(
+          'type' => 'int',
+          'not null' => TRUE,
+          'default' => 0,
+          'description' => 'The timestamp of the vote creation.',
+        ),
+
+        'question' => array (
+          'type' => 'text',
+          'not null' => TRUE,
+          'description' => 'The personal question',
+        ),
+
+        'answer' => array (
+          'type' => 'text',
+          'not null' => TRUE,
+          'description' => 'The personal answer',
+        ),
+
+
+
+      ),
+      'primary key' => array('id'),
+    );
+
+
+    return $schema;
+ }

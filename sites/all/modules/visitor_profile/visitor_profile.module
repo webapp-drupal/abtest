@@ -28,7 +28,7 @@ function visitor_profile_init() {
  }
  //setcookie($cookie_name, $cookie_value_ip, time() + 31556926, $cookie_path, $cookie_domain, false); // 31556926 = 1 year;
  
- drupal_set_message (t('Boot fired.. '.$_COOKIE["ns_website"]), 'sucsess');
+ drupal_set_message (t('Boot fired.. '.'Visitor with domain: '.$_COOKIE["ns_website"]).' detected', 'sucsess');
 
 }
 
@@ -66,6 +66,11 @@ function visitor_profile_init() {
  }
 
  function visitor_profile_submit_handler() {
+ // if cookie exists and the value equals to fetched ip or cookies value not equals to fetched ip
+    if(isset($_COOKIE['ns_website'])) {
+        drupal_set_message(t("WE are in! here we'll' create the profile for the voited visitor"));
+
+    }
 
     drupal_set_message(t("WE are in! here we'll' create the profile for the voited visitor"));
     
@@ -115,7 +120,7 @@ function visitor_profile_personal_question_submit_handler() {
 
 
 /*
- *  Preprocess Poll results adding personal question if it wass set
+ *  Preprocess Poll results adding personal question if it was set
  * 
  *  Why it's not working fucking  FUUUUUCK!!!!
  */
@@ -133,3 +138,18 @@ function visitor_profile_personal_question_submit_handler() {
 
 
 // }
+
+
+
+
+/**
+ * Implements hook_views_api().
+ * Creating the view for our custom table to create user profile page
+ */
+function visitor_profile_views_api() {
+    return array(
+      'api' => 3,
+      'path' => drupal_get_path('module', 'visitor_profile') . '/views',
+    );
+  }
+  

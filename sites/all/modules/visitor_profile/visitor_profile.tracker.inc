@@ -9,6 +9,47 @@
 */
  drupal_set_message (t('User tracking is Connected... '), 'sucsess');
 
+ //define entities with hook_entity_info
+
+
+ /**
+  * Implements hook_entity_info().
+  */
+ function visitor_profile_entity_info() {
+     $info['profile'] = array(
+         'label' => t('Visitor profile'),
+         'plural label' => t('Visitors profiles'),
+         'controller class' => 'EntityAPIController',
+         'base table' => 'profiles',
+         'entity keys' => array(
+            'id' => 'pid',
+          ),
+     );//profile entity
+     $info['visits']  = array(
+        'label' => t('Profile visits'),
+        'plural label' => t('Profile visits'),
+        'controller class' => 'EntityAPIController',
+        'base table' => 'visits',
+        'entity keys' => array(
+           'id' => 'vid',
+         ),
+
+     );//Visits entity
+     $info['answers'] = array(
+        'label' => t('Profile personal information'),
+        'plural label' => t('Visitors profiles'),
+        'controller class' => 'EntityAPIController',
+        'base table' => 'profile_private_answers',
+        'entity keys' => array(
+           'id' => 'id',
+         ),
+     );//Answers entity
+
+     return $info;
+   
+ }
+
+ //Here should be entity
 
 // function create_visitor_profile(){
 // //Visitor Profile entity
