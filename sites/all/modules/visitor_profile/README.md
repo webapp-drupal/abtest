@@ -47,12 +47,8 @@ On time of voiting:
 3. Detect Geolocation - almost done
 4. Record personal question in profile - preprocess function has errors almost done
 
-**Profile display**
-1. Queries to display profile on page - not done
-2. Theme for the profile page - not done
-3. Append records for the profile each time poll voted or pages visited - not done
-4. Extract - tags from visited pages and save to the profile - not done
-
+**Profiles admin page display**
+1. Views to display profiles in rows and detailed information on single profile with the connections to all information
 
 
 
