@@ -8,7 +8,9 @@
 *  V. Charinas
 */
  drupal_set_message (t('User tracking is Connected... '), 'sucsess');
+ 
 
+ //dpm($time);
  //define entities with hook_entity_info
 
 
@@ -37,7 +39,7 @@
      );//Visits entity
      $info['answers'] = array(
         'label' => t('Profile personal information'),
-        'plural label' => t('Visitors profiles'),
+        'plural label' => t('Visitors profiles information'),
         'controller class' => 'EntityAPIController',
         'base table' => 'profile_private_answers',
         'entity keys' => array(
@@ -51,12 +53,13 @@
 
  //Here should be entity
 
-// function create_visitor_profile(){
+// function create_visitor_profile($host){
 // //Visitor Profile entity
-// $entity = entity_create('visitor', array('type' =>'profile'));
-// $entity->host = "Host";
-// //$entity->field_hello = array(LANGUAGE_NONE => array(0 => array('value' => "Howdy Partner!")));
+// $entity = entity_create('profile', array('type' =>'profile'));
+// $entity->profiles_host = $host;
+// $entity->created = $time;
 // $entity->save();
+// }
 // //Not all entities have a save method, in which case, use entity_save()
 // //entity_save('vehicle', $entity);
 

@@ -6,7 +6,7 @@
  * V.Charinas
  */
 
-    require dirname(__FILE__) . '/visitor_profile.tracker.inc';
+require dirname(__FILE__) . '/visitor_profile.tracker.inc';
 /**
  * Implements hook_init().
  */
@@ -28,7 +28,7 @@ function visitor_profile_init() {
  }
  //setcookie($cookie_name, $cookie_value_ip, time() + 31556926, $cookie_path, $cookie_domain, false); // 31556926 = 1 year;
  
- drupal_set_message (t('Boot fired.. '.'Visitor with domain: '.$_COOKIE["ns_website"]).' detected', 'sucsess');
+ drupal_set_message (t('Boot fired.. '.'Visitor with domain: '.$_COOKIE[$cookie_name]).' detected', 'sucsess');
 
 }
 
@@ -39,7 +39,7 @@ function visitor_profile_init() {
 /**
 *  Implements hook_theme().
 */
-    function visitor_profile_theme($existing, $type, $theme, $path) {
+function visitor_profile_theme($existing, $type, $theme, $path) {
         $theme = array();
         $theme['poll_results'] = array(
           'render element' => 'content',
@@ -48,12 +48,12 @@ function visitor_profile_init() {
           'path' => drupal_get_path('module', 'visitor_profile') . '/templates',
          );
         return $theme;
-      }
+}
 
  /**
   * Implements hook_form_alter().
   */
- function visitor_profile_form_alter (&$form, &$form_state, $form_id) {
+function visitor_profile_form_alter (&$form, &$form_state, $form_id) {
             //dpm($form_id);//get the form_id
         
             //hook the poll form
@@ -63,9 +63,13 @@ function visitor_profile_init() {
                 return $form;
 
     }
- }
+}
 
- function visitor_profile_submit_handler() {
+function visitor_profile_submit_handler() {
+
+    $time = time();
+    $host = geoip_ip_address();
+
  // if cookie exists and the value equals to fetched ip or cookies value not equals to fetched ip
     if(isset($_COOKIE['ns_website'])) {
         drupal_set_message(t("WE are in! here we'll' create the profile for the voited visitor"));
@@ -74,70 +78,85 @@ function visitor_profile_init() {
 
     drupal_set_message(t("WE are in! here we'll' create the profile for the voited visitor"));
     
- }
+}
 
 /**
+ *  Implements hook_profile_personal_form
  *  personal question form for poll
  *  @ingroup forms
  *  
  */
 
 function visitor_profile_personal_form($form, &$form_state, $nid){
+    $form_title = '';
     $form_state['cache'] = TRUE;
     // Store the nid so we can get to it in submit functions.
     $form['#nid'] = $nid;
     //load node to fetch field
     $node = node_load($nid);
+    //dpm($node);
+    if (!empty($node->field_personal_question)) {
+        $form_title = $node->field_personal_question['und'][0]['value'];
+
+    } else {
+        $form_title = 'Question not set form not displayed';
+    }
+    //dpm($form_title);
     
     //build our form
    
 
   
-    $form['title'] = $node->field_personal_question[LANGUAGE_NONE] [0] ['value'];
+    $form['description'] = array(
+        '#type' => 'item',
+        '#title' => t($form_title),
+    );
     $form['answer'] = array (
         '#type' => 'textfield',
         '#title' => t('Your Answer'),
 
     );
-    $form['actions'] = array('#type' => 'actions');
-    $form['actions']['submit'] = array(
+    
+    $form['submit'][]= array(
     '#type' => 'submit',
     '#value' => t('Submit your answer'),
     '#submit' => array('visitor_profile_personal_question_submit_handler')
   );
-  dpm($form);
+  //dpm($form);
   return $form;
 }
 
 
 
-function visitor_profile_personal_question_submit_handler() {
+function visitor_profile_personal_question_submit_handler($form, &$form_state) {
 
     drupal_set_message(t('yehh for fucks sake'));
-    drupal_set_message(t('You entered %input', array('%input' => $form_state['values']['answer'])));
+    
+    drupal_set_message(t('Submitting values: @values', array('@values' => $form_state['values']['answer'])));
+    //drupal_set_message(t('You entered %input', array('%input' => $form_state['values']['answer'])));
+    //dpm($form_state);
 
 }
 
 
 /*
- *  Preprocess Poll results adding personal question if it was set
- * 
- *  Why it's not working fucking  FUUUUUCK!!!!
+ * Implements  hook_profile_preprocess_poll_results
+ * Preprocess Poll results adding personal question if it was set
  */
 
 
-// function visitor_profile_preprocess_poll_results(&$variables) {
+function visitor_profile_preprocess_poll_results(&$variables) {
 
-//     $variables['personal_form'] = array();
-//     $elements = drupal_get_form('visitor_profile_personal_form', $variables['nid']);
-//     $variables['persinal_form'] = drupal_render($elements);
+    $variables['personal_form'] = array();// defining variables for form
+    $elements = drupal_get_form('visitor_profile_personal_form', $variables['nid']);// getting elements such as form handler with passing node id to it
+    $node = node_load($variables['nid']);//getting node object to set if statement
+    //dpm($node);
+    if (!empty($node->field_personal_question['und'][0]['value']) && $node->field_collect_personal_info['und'][0]['value'] == '1') {
+    $variables['persinal_form'] = drupal_render($elements);
+    
+    }
    
-//        // $elements = drupal_get_form('visitor_profile_personal_form', $variables['nid']);
-//        // $variables['personal_question_form'] = drupal_render($elements);
-//         //dpm($elements);
-
-
-// }
+}
 
 
 
@@ -151,5 +170,5 @@ function visitor_profile_views_api() {
       'api' => 3,
       'path' => drupal_get_path('module', 'visitor_profile') . '/views',
     );
-  }
+}
   
