@@ -72,11 +72,12 @@ function visitor_profile_submit_handler() {
 
  // if cookie exists and the value equals to fetched ip or cookies value not equals to fetched ip
     if(isset($_COOKIE['ns_website'])) {
-        drupal_set_message(t("WE are in! here we'll' create the profile for the voited visitor"));
+        drupal_set_message(t("WE are in! here we'll' create the profile for the voited visitor COOKIE here"));
 
-    }
+    } else {
 
     drupal_set_message(t("WE are in! here we'll' create the profile for the voited visitor"));
+    }
     
 }
 
