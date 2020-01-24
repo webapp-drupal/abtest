@@ -131,6 +131,7 @@ function visitor_profile_personal_form($form, &$form_state, $nid){
 function visitor_profile_personal_question_submit_handler($form, &$form_state) {
 
     drupal_set_message(t('yehh for fucks sake'));
+    //here we saving answer property of the 
     
     drupal_set_message(t('Submitting values: @values', array('@values' => $form_state['values']['answer'])));
     //drupal_set_message(t('You entered %input', array('%input' => $form_state['values']['answer'])));

@@ -39,16 +39,21 @@ On time of voiting:
 
 # TO DO #
 
-**Profile** creation on poll  - major task not done
+**Profile** creation on poll  - **DONE**
 **On time of creating Profile for the visitor:**
 
 1. Fetch Host ip - **DONE**
 2. Record the ip in cookie if the ip dinamic (not the same ) we are checking the cookies in the browser are set or not  if YES -> get the cookies ip    value if NOT - > record it in cookies and create profile - **DONE**
 3. Detect Geolocation - almost done
-4. Record personal question in profile - preprocess function has errors almost done
+4. Record personal question in profile - Preprocess function fixed and ready to perform answer collection but only once for the host - almost done
 
 **Profiles admin page display**
 1. Views to display profiles in rows and detailed information on single profile with the connections to all information
+
+
+**Ongoing task to poll voites**
+ Possible solution to authenticate each individual voter, so that each user can only vote once.
+
 
 
 
