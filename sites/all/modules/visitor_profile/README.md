@@ -53,6 +53,7 @@ On time of voiting:
 
 **Ongoing task to poll voites**
  Possible solution to authenticate each individual voter, so that each user can only vote once.
+ 2 difficult parts left - identify user is came back via cookies is not a problem. how to identify visitors from one ip (offices for example) of the and let them vote once - this is a problem
 
 
 
