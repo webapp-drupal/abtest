@@ -28,7 +28,7 @@ function visitor_profile_schema(){
 
             'created' => array(
                 'type' => 'int',
-                'not null' => TRUE,
+                //'not null' => TRUE,
                 'default' => 0,
                 'description' => 'The timestamp of the vote creation.',
               ),
@@ -36,53 +36,53 @@ function visitor_profile_schema(){
             'country_name' => array(
                 'type' => 'varchar',
                 'length' => 128,
-                'not null' => TRUE,
+                //'not null' => TRUE,
                 'default' => '',
             ),
 
             'country_code' => array(
                 'type' => 'varchar',
                 'length' => 2,
-                'not null' => TRUE,
+                //'not null' => TRUE,
                 'default' => '',
               ),
             'country_code3' => array(
                 'type' => 'varchar',
                 'length' => 3,
-                'not null' => TRUE,
+                //'not null' => TRUE,
                 'default' => '',
               ),
               
             'region' => array(
                 'type' => 'varchar',
                 'length' => 128,
-                'not null' => TRUE,
+                //not null' => TRUE,
                 'default' => '',
               ),
             'city' => array(
                 'type' => 'varchar',
                 'length' => 128,
-                'not null' => TRUE,
+                //'not null' => TRUE,
                 'default' => '',
               ),
             'postal_code' => array(
                 'type' => 'varchar',
                 'length' => 128,
-                'not null' => TRUE,
+                //'not null' => TRUE,
                 'default' => '',
               ),
             'latitude' => array(
                 'type' => 'numeric',
                 'precision' => 13,
                 'scale' => 10,
-                'not null' => TRUE,
+                //'not null' => TRUE,
                 'default' => 0,
               ),
             'longitude' => array(
                 'type' => 'numeric',
                 'precision' => 13,
                 'scale' => 10,
-                'not null' => TRUE,
+                //'not null' => TRUE,
                 'default' => 0,
               ),
             
@@ -176,9 +176,9 @@ function visitor_profile_schema(){
       ),
 
         'pid' => array(
-          'type' => 'serial',
+          'type' => 'int',
           'not null' => TRUE,
-          'description' => 'Primary Key: Unique profile item ID.',
+          'description' => 'Profile id.',
         ),
 
         'poll_nid' => array(
@@ -215,3 +215,16 @@ function visitor_profile_schema(){
 
     return $schema;
  }
+
+ /**
+  * Implements hook_uninstall().
+  */
+//  function visitor_profile_uninstall() {
+//  /**
+//   * Sample code from the api example.
+//   *  variable_del('upload_file_types');
+//   */
+ 
+//   /* Your code here */
+//   field_attach_delete_bundle('profiles', 'visits', 'profile_private_answers');
+//  }
