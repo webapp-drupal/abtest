@@ -31,9 +31,9 @@ save the answer in profile. Save poll answer to the  profile
 
 On time of voiting:
 
-1. Add form to collect personal answer after voitig - check if personal question is added show form to collect the answer and point 3 if NO -> DO only 2 point
-2. Create record for the anonimous visitor - check record for the host already exists store the vote choice  
-3. Add personal question to the **Proifile**
+1. Add form to collect personal answer after voitig - check if personal question is added show form to collect the answer and point 3 if NO -> DO only 2 point **DONE**
+2. Create record for the anonimous visitor - check record for the host already exists store the vote choice  - almost done
+3. Add personal question to the **Answers**
 
     
 
@@ -45,6 +45,7 @@ On time of voiting:
 1. Fetch Host ip - **DONE**
 2. Record the ip in cookie if the ip dinamic (not the same ) we are checking the cookies in the browser are set or not  if YES -> get the cookies ip    value if NOT - > record it in cookies and create profile - **DONE**
 3. Detect Geolocation - **DONE** NOTE: accuracy of the detection on free library is not to good
+
 4. Record personal question in profile - Preprocess function fixed and ready to perform answer collection but only once for the host - almost done
 
 **Profiles admin page display**

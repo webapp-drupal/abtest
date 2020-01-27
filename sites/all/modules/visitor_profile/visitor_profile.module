@@ -71,10 +71,10 @@ function visitor_profile_submit_handler() {
 
     $time = time();
     //$host = ip_address();//ip to track
-    $host = '83.244.184.222'; //debug value as on local machine i have only ::1 value
+    $host = '81.241.174.202'; //debug value as on local machine i have only ::1 value
   
     $reader = new GeoIp2\Database\Reader( drupal_get_path('module', 'visitor_profile') . '/includes/GeoLite2-City.mmdb');
-    $record = $reader->city('83.244.184.222');//in debug mode
+    $record = $reader->city('81.241.174.202');//in debug mode
     
     //$city_name = geoip_city_name();
     //geoip_debug($host);
@@ -86,9 +86,11 @@ function visitor_profile_submit_handler() {
  // if cookie exists and the value equals to fetched ip or cookies value not equals to fetched ip
     if(isset($_COOKIE['ns_website'])) {
         drupal_set_message(t("WE are in! here we'll' create the profile for the voited visitor COOKIE here"));
-        dpm($record->city->name, $record->country->name); // 'United kingdom London'
-        dpm($record->country->isoCode, $record->postal->code);//GB NW4
-        dpm($record->location->latitude, $record->location->longitude);
+        dpm($record->city->name, $record->postal->code); // 'United kingdom London'
+        dpm($record->country->isoCode, $record->country->name);//GB NW4
+        dpm( $record->location->longitude, $record->location->latitude);
+        echo($record->location->latitude);
+        echo ($record->location->longitude);
        
     } else {
 
