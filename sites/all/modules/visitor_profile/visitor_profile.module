@@ -67,9 +67,28 @@ function visitor_profile_form_alter (&$form, &$form_state, $form_id) {
 
 function visitor_profile_submit_handler() {
 
-    $time = time();
-    $host = geoip_ip_address();
+    drupal_load('module', 'geoip'); // loading the geoip module
+  
+    
+//    if( function_exists( 'geoip_country_code' ) ) {
+//     $country_code = geoip_country_code();
+//   }
+//   if( function_exists( 'geoip_country_name' ) ) {
+//     $country_name = geoip_country_name();
+//   }
+//   if( function_exists( 'geoip_city_name' ) ) {
+//     $city_name = geoip_city_name();
+//   }
 
+    $time = time();
+    $host = '83.244.184.222';
+    $ip = $host;
+    $city_name = geoip_city_name();
+    //geoip_debug($host);
+    //$host = geoip_ip_address();
+    
+    
+    dpm($city_name); 
  // if cookie exists and the value equals to fetched ip or cookies value not equals to fetched ip
     if(isset($_COOKIE['ns_website'])) {
         drupal_set_message(t("WE are in! here we'll' create the profile for the voited visitor COOKIE here"));
