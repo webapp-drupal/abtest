@@ -2,7 +2,7 @@ name = Visitor profile
 description = Creates profile for anonimous visitor when poll vote submited
 core = 7.x
 package = Custom Modules
-dependencies[] = geoip
+
 dependencies[] = charts_graphs
 dependencies[] = drupal:poll
 

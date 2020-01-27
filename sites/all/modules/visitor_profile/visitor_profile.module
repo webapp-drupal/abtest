@@ -12,16 +12,31 @@ require dirname(__FILE__) . '/visitor_profile.tracker.inc';
  */
     
 function visitor_profile_init() {
-    // loading GEO IP API preconfigured with third party module
+global $base_url;
+ require 'includes/vendor/autoload.php';//geoip run
 
- drupal_load('module', 'geoip'); // loading the geoip module
- global $base_url; 
- //global $cookie_domain;
  $cookie_domain = ($_SERVER['HTTP_HOST'] != 'localhost') ? $_SERVER['HTTP_HOST'] : false;
  $cookie_name = 'ns_website';
- $cookie_value_ip = geoip_ip_address();
+ $cookie_value_ip = ip_address();
  $cookie_path =  $base_url.'/'.current_path();
- //dpm($cookie_path);
+ $reader = new GeoIp2\Database\Reader( drupal_get_path('module', 'visitor_profile') . '/includes/GeoLite2-City.mmdb');
+ $record = $reader->city('83.244.184.222');
+ dpm($record->city->name, $record->country->name); // 'United kingdom London'
+ dpm($record->country->isoCode, $record->postal->code);//GB NW4
+ dpm($record->location->latitude, $record->location->longitude);
+  
+ //global $cookie_domain;
+
+//     if( function_exists( 'geoip_country_code' ) ) {
+//     $country_code = geoip_country_code();
+//   }
+//   if( function_exists( 'geoip_country_name' ) ) {
+//     $country_name = geoip_country_name();
+//   }
+//   if( function_exists( 'geoip_city_name' ) ) {
+//     $city_name = geoip_city_name();
+//   }
+ dpm($cookie_value_ip);
  //cookie set for the visitor identification in case dinamic ip is changed 
  if (!isset($_COOKIE[$cookie_name])) { 
  setcookie($cookie_name, $cookie_value_ip, time() + 31556926, $cookie_path, $cookie_domain); // 31556926 = 1 year;
@@ -31,6 +46,8 @@ function visitor_profile_init() {
  drupal_set_message (t('Boot fired.. '.'Visitor with domain: '.$_COOKIE[$cookie_name]).' detected', 'sucsess');
 
 }
+
+
 
   
 
@@ -65,31 +82,25 @@ function visitor_profile_form_alter (&$form, &$form_state, $form_id) {
 
 function visitor_profile_submit_handler() {
 
-    drupal_load('module', 'geoip'); // loading the geoip module
-  
     
-//    if( function_exists( 'geoip_country_code' ) ) {
-//     $country_code = geoip_country_code();
-//   }
-//   if( function_exists( 'geoip_country_name' ) ) {
-//     $country_name = geoip_country_name();
-//   }
-//   if( function_exists( 'geoip_city_name' ) ) {
-//     $city_name = geoip_city_name();
-//   }
+    
+
 
     $time = time();
     $host = '83.244.184.222';
     $ip = $host;
-    $city_name = geoip_city_name();
+    //$city_name = geoip_city_name();
     //geoip_debug($host);
     //$host = geoip_ip_address();
+    //echo geoip_database_info(GEOIP_COUNTRY_EDITION);
     
     
-    dpm($city_name); 
+    //dpm($city_name); 
  // if cookie exists and the value equals to fetched ip or cookies value not equals to fetched ip
     if(isset($_COOKIE['ns_website'])) {
         drupal_set_message(t("WE are in! here we'll' create the profile for the voited visitor COOKIE here"));
+        echo $_SERVER['REMOTE_ADDR'];
+        echo geoip_city_name($_SERVER['REMOTE_ADDR']);
 
     } else {
 
