@@ -7,7 +7,7 @@
 *  Functions:
 *  V. Charinas
 */
- drupal_set_message (t('User tracking is Connected... '), 'sucsess');
+ //drupal_set_message (t('User tracking is Connected... '), 'sucsess');
  
 
  //dpm($time);

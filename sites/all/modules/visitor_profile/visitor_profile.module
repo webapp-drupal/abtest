@@ -26,7 +26,7 @@ global $base_url;
  }
  //setcookie($cookie_name, $cookie_value_ip, time() + 31556926, $cookie_path, $cookie_domain, false); // 31556926 = 1 year;
  
- drupal_set_message (t('Boot fired.. '.'Visitor with domain: '.$_COOKIE[$cookie_name]).' detected', 'sucsess');
+ //drupal_set_message (t('Boot fired.. '.'Visitor with domain: '.$_COOKIE[$cookie_name]).' detected', 'sucsess');
 
 }
 
