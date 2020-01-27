@@ -44,7 +44,7 @@ On time of voiting:
 
 1. Fetch Host ip - **DONE**
 2. Record the ip in cookie if the ip dinamic (not the same ) we are checking the cookies in the browser are set or not  if YES -> get the cookies ip    value if NOT - > record it in cookies and create profile - **DONE**
-3. Detect Geolocation - almost done
+3. Detect Geolocation - **DONE** NOTE: accuracy of the detection on free library is not to good
 4. Record personal question in profile - Preprocess function fixed and ready to perform answer collection but only once for the host - almost done
 
 **Profiles admin page display**

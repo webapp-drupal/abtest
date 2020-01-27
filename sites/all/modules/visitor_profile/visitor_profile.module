@@ -13,18 +13,13 @@ require dirname(__FILE__) . '/visitor_profile.tracker.inc';
     
 function visitor_profile_init() {
 global $base_url;
- require 'includes/vendor/autoload.php';//geoip run
+ 
 
  $cookie_domain = ($_SERVER['HTTP_HOST'] != 'localhost') ? $_SERVER['HTTP_HOST'] : false;
  $cookie_name = 'ns_website';
  $cookie_value_ip = ip_address();
  $cookie_path =  $base_url.'/'.current_path();
- $reader = new GeoIp2\Database\Reader( drupal_get_path('module', 'visitor_profile') . '/includes/GeoLite2-City.mmdb');
- $record = $reader->city('83.244.184.222');
- dpm($record->city->name, $record->country->name); // 'United kingdom London'
- dpm($record->country->isoCode, $record->postal->code);//GB NW4
- dpm($record->location->latitude, $record->location->longitude);
- dpm($cookie_value_ip);
+ 
  //cookie set for the visitor identification in case dinamic ip is changed 
  if (!isset($_COOKIE[$cookie_name])) { 
  setcookie($cookie_name, $cookie_value_ip, time() + 31556926, $cookie_path, $cookie_domain); // 31556926 = 1 year;
@@ -70,13 +65,17 @@ function visitor_profile_form_alter (&$form, &$form_state, $form_id) {
 
 function visitor_profile_submit_handler() {
 
-    
+    require 'includes/vendor/autoload.php';//geoip run
     
 
 
     $time = time();
-    $host = '83.244.184.222';
-    $ip = $host;
+    //$host = ip_address();//ip to track
+    $host = '83.244.184.222'; //debug value as on local machine i have only ::1 value
+  
+    $reader = new GeoIp2\Database\Reader( drupal_get_path('module', 'visitor_profile') . '/includes/GeoLite2-City.mmdb');
+    $record = $reader->city('83.244.184.222');//in debug mode
+    
     //$city_name = geoip_city_name();
     //geoip_debug($host);
     //$host = geoip_ip_address();
@@ -87,9 +86,10 @@ function visitor_profile_submit_handler() {
  // if cookie exists and the value equals to fetched ip or cookies value not equals to fetched ip
     if(isset($_COOKIE['ns_website'])) {
         drupal_set_message(t("WE are in! here we'll' create the profile for the voited visitor COOKIE here"));
-        echo $_SERVER['REMOTE_ADDR'];
-        echo geoip_city_name($_SERVER['REMOTE_ADDR']);
-
+        dpm($record->city->name, $record->country->name); // 'United kingdom London'
+        dpm($record->country->isoCode, $record->postal->code);//GB NW4
+        dpm($record->location->latitude, $record->location->longitude);
+       
     } else {
 
     drupal_set_message(t("WE are in! here we'll' create the profile for the voited visitor"));
