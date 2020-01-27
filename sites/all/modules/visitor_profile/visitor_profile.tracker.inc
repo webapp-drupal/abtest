@@ -7,12 +7,6 @@
 *  Functions:
 *  V. Charinas
 */
- //drupal_set_message (t('User tracking is Connected... '), 'sucsess');
- 
-
- //dpm($time);
- //define entities with hook_entity_info
-
 
  /**
   * Implements hook_entity_info().

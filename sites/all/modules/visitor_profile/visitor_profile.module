@@ -123,9 +123,6 @@ function visitor_profile_personal_form($form, &$form_state, $nid){
     //dpm($form_title);
     
     //build our form
-   
-
-  
     $form['description'] = array(
         '#type' => 'item',
         '#title' => t($form_title),
@@ -144,8 +141,6 @@ function visitor_profile_personal_form($form, &$form_state, $nid){
   //dpm($form);
   return $form;
 }
-
-
 
 function visitor_profile_personal_question_submit_handler($form, &$form_state) {
 
@@ -177,9 +172,6 @@ function visitor_profile_preprocess_poll_results(&$variables) {
     }
    
 }
-
-
-
 
 /**
  * Implements hook_views_api().
