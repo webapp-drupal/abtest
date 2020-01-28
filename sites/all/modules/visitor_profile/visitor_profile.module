@@ -12,6 +12,7 @@ require dirname(__FILE__) . '/visitor_profile.tracker.inc';
  */
     
 function visitor_profile_init() {
+
 global $base_url;
  
 
@@ -76,25 +77,24 @@ function visitor_profile_submit_handler() {
     $reader = new GeoIp2\Database\Reader( drupal_get_path('module', 'visitor_profile') . '/includes/GeoLite2-City.mmdb');
     $record = $reader->city($host);//in debug mode
 
-    // $result = db_select('profiles', 'p') 
-    // ->fields('p')
-    // ->condition('profile_host', $host, '=')
-    // ->execute()
-    // ->fetchAssoc();
-    // if (empty($result) || $result ) {
-    //     //some code
-    // }
+    
  // if cookie exists and the value equals to fetched ip or cookies value not equals to fetched ip
     if(isset($_COOKIE['ns_website']) ) {
         drupal_set_message(t("WE are in! here we'll' create the profile for the voited visitor COOKIE here"));
-        dpm($record->city->name); // 'London'
-        dpm($record->postal->code); //  'NW4'
-        dpm($record->country->isoCode);//GB 
-        dpm($record->country->name);//Great Britan
-        dpm ($record->location->latitude);
-        dpm ($record->location->longitude);
-
+        
         //create entity
+        $entity = entity_create('profile', array('type' =>'profile'));
+        $entity->profiles_host = $host;
+        $entity->created = $time;
+        $entity->country_name = $record->country->name;
+        $entity->country_code = $record->country->isoCode;
+        $entity->city         = $record->city->name;
+        $entity->postal_code  = $record->postal->code;
+        $entity->latitude     = $record->location->latitude;
+        $entity->longitude    = $record->location->longitude;
+
+
+        entity_save('profile', $entity);
 
 
         
