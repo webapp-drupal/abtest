@@ -1,5 +1,5 @@
 <?php
-
+//https://maxmind.github.io/GeoIP2-php/
 //conditional fieldset
 function MYMODULE_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'FORM_ID_node_form') {
@@ -39,3 +39,60 @@ function MYMODULE_addToFieldSet($form, $fieldset, $fields) {
 
   return $form;
 }
+
+/*
+  * Custom function to get query from Profiles table  
+  * DB queries for the reuse purpose
+  */
+  function get_visitor_profiles(){
+    //here we  getting all profiles but likely we no need them 
+    
+   }
+  
+   //
+  
+   //Here should be entity
+  
+  // function create_visitor_profile($host){
+  // //Visitor Profile entity
+  // $entity = entity_create('profile', array('type' =>'profile'));
+  // $entity->profiles_host = $host;
+  // $entity->created = $time;
+  // $entity->save();
+  // }
+  // //Not all entities have a save method, in which case, use entity_save()
+  // //entity_save('vehicle', $entity);
+  
+  
+  // // Collect information like ip url brawser
+  
+  // //Append entity
+  
+  // $entity = entity_load_single('profile', $entity_id);
+  // // make whatever changes
+  // $entity->save();
+  
+  // }
+  
+  // //Current path
+  
+  // $path = current_path();
+  // $path_alias = drupal_lookup_path('alias',$path);
+  
+          //dpm($record->city->name); // 'London'
+          //dpm($record->postal->code); //  'NW4'
+          //dpm($record->country->isoCode);//GB 
+          //dpm($record->country->name);//Great Britan
+          //dpm ($record->location->latitude);
+          //dpm ($record->location->longitude);
+  
+  
+  // $result = db_select('profiles', 'p') 
+      // ->fields('p')
+      // ->condition('profile_host', $host, '=')
+      // ->execute()
+      // ->fetchAssoc();
+      // if (empty($result) || $result ) {
+      //     //some code
+      // }
+  

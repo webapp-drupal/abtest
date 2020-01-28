@@ -31,10 +31,6 @@ global $base_url;
 
 }
 
-
-
-  
-
 /**
 *  Implements hook_theme().
 */
@@ -71,17 +67,22 @@ function visitor_profile_submit_handler() {
 
 
     $time = time();
-    //$host = ip_address();//ip to track
+    $host = ip_address();//ip to track
+    if ($host ==='::1') {
     $host = '81.241.174.202'; //debug value as on local machine i have only ::1 value
+    }
   
     $reader = new GeoIp2\Database\Reader( drupal_get_path('module', 'visitor_profile') . '/includes/GeoLite2-City.mmdb');
     $record = $reader->city($host);//in debug mode
 
     
  // if cookie exists and the value equals to fetched ip or cookies value not equals to fetched ip
-    if(isset($_COOKIE['ns_website']) ) {
+    if(isset($_COOKIE['ns_website']) && $_COOKIE['ns_website'] != '::1' ) {
         drupal_set_message(t("WE are in! here we'll' create the profile for the voited visitor COOKIE here"));
-        
+        // if (exists($profile)) {
+        //         drupal_set_message(t("Profile already exists"));
+        // } //if profile exists end
+        //  else {
         //create entity
         $entity = entity_create('profile', array('type' =>'profile'));
         $entity->profiles_host = $host;
@@ -95,6 +96,8 @@ function visitor_profile_submit_handler() {
 
 
         entity_save('profile', $entity);
+
+        //}//else end
 
 
         
