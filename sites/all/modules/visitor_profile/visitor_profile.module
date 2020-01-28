@@ -74,17 +74,18 @@ function visitor_profile_submit_handler() {
     $host = '81.241.174.202'; //debug value as on local machine i have only ::1 value
   
     $reader = new GeoIp2\Database\Reader( drupal_get_path('module', 'visitor_profile') . '/includes/GeoLite2-City.mmdb');
-    $record = $reader->city('66.249.65.185');//in debug mode
-    
-    //$city_name = geoip_city_name();
-    //geoip_debug($host);
-    //$host = geoip_ip_address();
-    //echo geoip_database_info(GEOIP_COUNTRY_EDITION);
-    
-    
-    //dpm($city_name); 
+    $record = $reader->city($host);//in debug mode
+
+    // $result = db_select('profiles', 'p') 
+    // ->fields('p')
+    // ->condition('profile_host', $host, '=')
+    // ->execute()
+    // ->fetchAssoc();
+    // if (empty($result) || $result ) {
+    //     //some code
+    // }
  // if cookie exists and the value equals to fetched ip or cookies value not equals to fetched ip
-    if(isset($_COOKIE['ns_website'])) {
+    if(isset($_COOKIE['ns_website']) ) {
         drupal_set_message(t("WE are in! here we'll' create the profile for the voited visitor COOKIE here"));
         dpm($record->city->name); // 'London'
         dpm($record->postal->code); //  'NW4'
@@ -92,8 +93,12 @@ function visitor_profile_submit_handler() {
         dpm($record->country->name);//Great Britan
         dpm ($record->location->latitude);
         dpm ($record->location->longitude);
+
+        //create entity
+
+
         
-        
+
        
     } else {
 

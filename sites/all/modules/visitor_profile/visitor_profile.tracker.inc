@@ -50,6 +50,7 @@
   */
  function get_visitor_profiles(){
   //here we  getting all profiles but likely we no need them 
+  
  }
 
  //
