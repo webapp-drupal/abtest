@@ -44,6 +44,15 @@
      return $info;
    
  }
+ /*
+  * Custom function to get query from Profiles table  
+  * DB queries for the reuse purpose
+  */
+ function get_visitor_profiles(){
+  //here we  getting all profiles but likely we no need them 
+ }
+
+ //
 
  //Here should be entity
 
