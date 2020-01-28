@@ -2,8 +2,9 @@
 
 /**
  * @file
+ * visitor_profile.install
  * Install, update and uninstall functions for the visitor_profile module.
- * V. Charinas
+ * author V. Charinas
  */
 
  

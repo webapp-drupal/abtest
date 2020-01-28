@@ -2,6 +2,7 @@
 
 /**
  * @file
+ * visitor_profile.module
  * Implements visitor profile creating functionality
  * V.Charinas
  */

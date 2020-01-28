@@ -1,11 +1,11 @@
 <?php
 
 /*
+*  @file
+*  visitor_profile.tracker.inc
 *  Visitor tracking
 *  Collecting user ip adress and geolocation via GEOIP2 Lite
-*  @file 
-*  Functions:
-*  V. Charinas
+*  @author V. Charinas
 */
 
  /**
