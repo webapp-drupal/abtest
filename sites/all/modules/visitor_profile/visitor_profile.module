@@ -84,7 +84,7 @@ function visitor_profile_submit_handler() {
         //         drupal_set_message(t("Profile already exists"));
         // } //if profile exists end
         //  else {
-        //create entity
+        //create profile entity
         $entity = entity_create('profile', array('type' =>'profile'));
         $entity->profiles_host = $host;
         $entity->created = $time;
@@ -100,10 +100,6 @@ function visitor_profile_submit_handler() {
 
         //}//else end
 
-
-        
-
-       
     } else {
 
     drupal_set_message(t("WE are in! here we'll' create the profile for the voited visitor"));
@@ -195,4 +191,6 @@ function visitor_profile_views_api() {
       'path' => drupal_get_path('module', 'visitor_profile') . '/views',
     );
 }
+
+
   

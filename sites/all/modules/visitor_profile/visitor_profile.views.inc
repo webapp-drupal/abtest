@@ -316,8 +316,129 @@ function visitor_profile_views_data() {
           ),
 
     );
+    // JOIN
+    $data ['profile_private_answers']['table']['join'] = array(
 
-    
+        'profiles' => array (
+            'handler' => 'views_join',
+            'left_table' => 'visits',
+            'left_field' => 'pid',
+            'field' => 'pid',
+        ),
+
+        'node' => array (
+            'handler' => 'views_join',
+            'left_table' => 'profile_private_answers',
+            'left_field' => 'nid',
+            'field' => 'poll_nid',
+        ),
+    );
+    // Fields defenition
+    $data ['porfile_private_answers'] = array(
+
+        'id' => array(
+            'title' => t('Answer record ID'),
+            'help' => t('The ID of the Private answer.'),
+            'field' => array(
+              'handler' => 'views_handler_field_numeric',
+              'click sortable' => TRUE,
+            ),
+            'sort' => array(
+              'handler' => 'views_handler_sort',
+            ),
+            'filter' => array(
+              'handler' => 'views_handler_filter_numeric',
+            ),
+        ),//end vid
+
+        'pid' => array(
+            'title' => t('Visitor Profile ID answered'),
+            'help' => t('The Visitors profile ID who answered the private question '),
+            'field' => array(
+              'handler' => 'views_handler_field_numeric',
+              'click sortable' => TRUE,
+            ),
+            'sort' => array(
+              'handler' => 'views_handler_sort',
+            ),
+            'filter' => array(
+              'handler' => 'views_handler_filter_numeric',
+            ),
+        ),//end pid
+
+        'answer_time' => array (
+            'title' => t('Timestamp for visit'),
+            'help' => t('Just a timestamp field.'),
+            'field' => array(
+                'handler' => 'views_handler_field_date',
+                'click sortable' => TRUE,
+            ),
+            'sort' => array(
+                'handler' => 'views_handler_sort_date',
+            ),
+            'filter' => array(
+                'handler' => 'views_handler_filter_date',
+            ),
+        ),//end answer_time
+
+        'poll_nid' => array(
+            'title' => t('Node id'),
+            'help' => t('The Node ID visited by profile holder.'),
+            'field' => array(
+              'handler' => 'views_handler_field_numeric',
+              'click sortable' => TRUE,
+            ),
+            'sort' => array(
+              'handler' => 'views_handler_sort',
+            ),
+            'filter' => array(
+              'handler' => 'views_handler_filter_numeric',
+            ),
+        ),//end poll_nid
+
+        'question' => array(
+            'title' => t('Private Question'),
+            'help' => t('Privatew question asked to visitor after poll vote.'),
+            'field' => array(
+                'handler' => 'views_handler_field',
+            // This is use by the table display plugin.
+                'click sortable' => TRUE,
+             ),
+            'sort' => array(
+                'handler' => 'views_handler_sort',
+            ),
+            'filter' => array(
+                'handler' => 'views_handler_filter_string',
+            ),
+            'argument' => array(
+                'handler' => 'views_handler_argument_string',
+            ),
+        ),//end question
+
+        'answer' => array(
+            'title' => t('Answer'),
+            'help' => t('The answer for the private question'),
+            'field' => array(
+                'handler' => 'views_handler_field',
+            // This is use by the table display plugin.
+                'click sortable' => TRUE,
+             ),
+            'sort' => array(
+                'handler' => 'views_handler_sort',
+            ),
+            'filter' => array(
+                'handler' => 'views_handler_filter_string',
+            ),
+            'argument' => array(
+                'handler' => 'views_handler_argument_string',
+            ),
+        ),//end question
+
+
+
+    );
+
+
 
 
   return $data;
