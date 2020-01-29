@@ -2,7 +2,7 @@
 
 /*
 *  @file
-*  visitor_profile.tracker.inc
+*  visitor_profile.entity.inc
 *  Visitor tracking
 *  Collecting user ip adress and geolocation via GEOIP2 Lite
 *  @author V. Charinas
