@@ -33,12 +33,14 @@ function visitor_profile_views_data() {
 
         'visits' => array (
             'handler' => 'views_join',
+            'left_table' => 'visits',
             'left_field' => 'pid',
             'field' => 'pid',
         ),
 
-        'profile_private_answers' => array (
+        'answers' => array (
             'handler' => 'views_join',
+            'left_table' => 'profile_private_answers',
             'left_field' => 'pid',
             'field' => 'pid',
         ),
