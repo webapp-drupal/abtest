@@ -15,8 +15,8 @@ function visitor_profile_views_data() {
   //All data for views
   $data = array();
 
-  //Profile base description
-  $data['profiles'] = array(
+  //Profile data
+  $data['profiles'] = array(//Profile table description
     'table' => array(
         'group'=> t('Profiles'),
         'base' => array(
@@ -206,7 +206,7 @@ function visitor_profile_views_data() {
             ),
         ),//end longitude
     );// fields end
- 
+    //Visits data
     $data['visits'] = array( //Visits table base with primary keys description
 
         'table' => array(
@@ -221,6 +221,7 @@ function visitor_profile_views_data() {
 
 
     );
+    //Visits JOIN
     $data ['visits']['table']['join'] = array(
 
         'profiles' => array (
@@ -237,7 +238,7 @@ function visitor_profile_views_data() {
             'field' => 'visited_nid',
         ),
     );
-
+    //Visits fields
     $data['visits'] = array( //Visits table fields description
         'vid' => array(
             'title' => t('Visit ID'),
@@ -301,6 +302,23 @@ function visitor_profile_views_data() {
 
         
     );
+    //profile_private_answers data
+
+    $data['profile_private_answers'] = array(
+        'table' => array(
+            'group'=> t('Profiles'),
+            'base' => array(
+                'field' => 'id',
+                'title' => t('Profile private answers Table'),
+                'help' => t('Profiles table contains visitor information can be related to nodes, visits, answers'),
+                //'weight' => -10,
+            ),
+          ),
+
+    );
+
+    
+
 
   return $data;
 
