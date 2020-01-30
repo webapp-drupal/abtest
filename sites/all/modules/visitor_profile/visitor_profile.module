@@ -61,7 +61,7 @@ function visitor_profile_form_alter (&$form, &$form_state, $form_id) {
     }
 }
 
-function visitor_profile_submit_handler() {
+function visitor_profile_submit_handler($form, &$form_state) {
 
     require 'includes/vendor/autoload.php';//geoip run
     
@@ -78,8 +78,9 @@ function visitor_profile_submit_handler() {
 
     
  // if cookie exists and the value equals to fetched ip or cookies value not equals to fetched ip
-    if(isset($_COOKIE['ns_website']) && $_COOKIE['ns_website'] != '::1' ) {
-        drupal_set_message(t("WE are in! here we'll' create the profile for the voited visitor COOKIE here"));
+ //   if(isset($_COOKIE['ns_website']) && $_COOKIE['ns_website'] != '::1' ) {
+    if(isset($_COOKIE['ns_website'])) {
+        drupal_set_message(t("You have Cookies in browser and profile created"));
         // if (exists($profile)) {
         //         drupal_set_message(t("Profile already exists"));
         // } //if profile exists end
@@ -98,6 +99,9 @@ function visitor_profile_submit_handler() {
 
         entity_save('profile', $entity);
 
+        //And straight away recording the answer to our entity
+        
+        dpm($form_state);
         //}//else end
 
     } else {
@@ -154,8 +158,15 @@ function visitor_profile_personal_question_submit_handler($form, &$form_state) {
 
     drupal_set_message(t('yehh for fucks sake'));
     //here we saving answer property of the 
-    
-    drupal_set_message(t('Submitting values: @values', array('@values' => $form_state['values']['answer'])));
+    dpm($form_state);
+    drupal_set_message(t('Submitted: @title,@node_id, @values', array(
+    '@title' => $form_state['complete form']['description']['#title'],
+    '@node_id' => $form_state['complete form']['#nid'],
+    '@values' => $form_state['values']['answer'],)
+        )
+    );
+    //here i need to create the Answer entity 
+
     //drupal_set_message(t('You entered %input', array('%input' => $form_state['values']['answer'])));
     //dpm($form_state);
 
