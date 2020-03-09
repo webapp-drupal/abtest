@@ -1,0 +1,22 @@
+<?php 
+
+/*
+*    The ideal system would be to have three extra fields in the scheduling options, under the current options
+*    "Add to nodequeue when published” - field allows user to input name of nodequeue. When the article is published,
+*    it is placed in the selected nodequeue. If no nodequeue is selected it is published in the normal way. 
+*    “Position” - drop-down menu allows user to select the position the article will have in the nodequeue. Default position is 1. 
+*    “Add to nodequeue on” - field allows user to specify time and date that the article will be added to 
+*    the selected nodequeue. Same format as “Publish on” fields. If the field is left blank it will be added to the
+*    selected nodequeue when published.
+*    So underneath the list of items that are in the nodequeue now, there would be a list of items that are scheduled to be added, with the following attributes - 
+*
+*    Title
+*    Scheduled date and time
+*    Position
+*    Operations - edit, remove
+
+*   @file 
+*
+*    V.Charinas  
+*/
+
