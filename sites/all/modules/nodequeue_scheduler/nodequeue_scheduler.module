@@ -14,9 +14,65 @@
 *    Scheduled date and time
 *    Position
 *    Operations - edit, remove
-
-*   @file 
+*      
+*    module name: nodequeue_scheduler
+*    @file 
 *
 *    V.Charinas  
 */
 
+/**
+ *  Implements hook_form_alter 
+ */
+
+ function nodequeue_scheduler_form_alter(&$form, $form_state,$form_id){
+
+    //if statement for admin
+
+    //if statement for scheduling
+  
+   if ($form_id == 'scheduler_form') {
+
+      dpm($form);
+      
+      $options - array(1,2,3,4,5); //temporial optoins this will be the position int
+
+      $form['scheduler_settings']['publish_nodequeue'] = array(
+         '#type' => 'fieldset',
+         '#title' => t('Nodequeue Scheduling settings')
+      );
+      $form ['scheduler_settings']['publish_nodequeue']['schedule_nodequeue'] = array(
+         '#type' => 'checkbox',
+         '#default_value' => 1,
+         '#title' => t('Add to nodequeue when published')
+      );
+
+      $form ['scheduler_settings']['publish_nodequeue']['nodequeue_position'] = array(
+         '#type' => 'select',
+         '#options' => $options,
+         '#title' => t('Position')
+
+      );
+      $form['scheduler_settings']['publish_nodequeue']['publish_on'] = array(
+         '#type' => 'textfield',
+         '#title' => t('Publish on'),
+         '#maxlength' => 30,
+         
+       );
+   //     if ($use_date_popup) {
+   //       // Make this a popup calendar widget.
+   //       $form['scheduler_settings']['publish_nodequeue']['publish_on']['#type'] = 'date_popup';
+   //       $form['scheduler_settings']['publish_nodequeue']['publish_on']['#date_format'] = $date_format;
+   //       $form['scheduler_settings']['publish_nodequeue']['publish_on']['#date_year_range'] = '0:+10';
+   //       $form['scheduler_settings']['publish_nodequeue']['publish_on']['#date_increment'] = variable_get('scheduler_date_popup_minute_increment', 1);
+   //       unset($descriptions['format']);
+   //       $form['scheduler_settings']['publish_nodequeue']['publish_on']['#description'] = filter_xss(implode(' ', $descriptions));
+   //       unset($form['scheduler_settings']['publish_nodequeue']['publish_on']['#maxlength']);
+   //     }
+   //   }
+
+    }
+    dpm($form);
+
+    return $form;
+}

@@ -1,5 +1,6 @@
 name = "Schedule Nodequeue's"
-description = "Adds Nodequeue scheduling functionality depends on Scheduler and Nodequeues modules"
+description = "Nodes scheduling for Nodequeues functionality depends on Scheduler and Nodequeues modules"
 core = "7.x"
 package = "Custom Modules"
-files[] = lead_nodeque.module;
+dependencies[] = nodequeue
+dependencies[] = scheduler
