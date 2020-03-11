@@ -1,4 +1,4 @@
-name = "Schedule Nodequeue's"
+name = "Scheduler Nodequeue"
 description = "Nodes scheduling for Nodequeues functionality depends on Scheduler and Nodequeues modules"
 core = "7.x"
 package = "Custom Modules"
